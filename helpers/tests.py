@@ -51,3 +51,10 @@ class CeryxClientTestSuite(TestCase):
         self.assertFalse(self.client.unset_route(self.source))
         self.mck_requests_patch.delete.assert_called_once_with(
             self.route_details_url.format(self.source, auth=None))
+
+    @mock.patch('helpers.ceryx.settings',
+                CERYX_API_HOST='https://ceryx.example.org')
+    def test_default_client(self, mck_settings):
+        client = ceryx.Client.get_default()
+        self.assertEqual(client.api_host,
+                         'https://ceryx.example.org/api/routes')

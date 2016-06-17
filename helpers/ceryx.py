@@ -2,6 +2,8 @@ import os
 
 import requests
 
+from django.conf import settings
+
 
 class Client(object):
     """Creates a Client for managing routes for
@@ -12,6 +14,10 @@ class Client(object):
         auth: The authentication that should be used, exactly like
             `requests`.
     """
+    @classmethod
+    def get_default(cls):
+        """Returns a default client, using the project's settings"""
+        return cls(settings.CERYX_API_HOST)
 
     def __init__(self, host, auth=None):
         self.api_host = os.path.join(host, 'api/routes')
