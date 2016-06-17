@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv('SISTER_WATCHD_SECRET',
                        'gb##%!^l!6!^leg&_w#f+)$2mv4b*%(blwa=zao_d7sgd*j3l%')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('PROD') is None
 
 ALLOWED_HOSTS = []
 
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'djcelery',
 
     'core',
     'helpers',
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Athens'
 
 USE_I18N = True
 
@@ -122,3 +124,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+import django_cache_url
+CACHES = {'default': django_cache_url.config(
+    os.getenv('REDIS_URL', 'locmem://sister_watchd'))}
+
+
+BROKER_URL = os.getenv('REDIS_URL')
+CELERY_RESULT_BACKEND = BROKER_URL
+CELERY_ACCEPT_CONTENT = ['json']

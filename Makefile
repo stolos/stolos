@@ -12,3 +12,6 @@ makemigrations:
 
 test:
 	./manage.py test
+
+worker:
+	celery -A sister_watchd worker -l info
