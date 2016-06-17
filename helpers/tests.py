@@ -1,20 +1,20 @@
-# -*- coding: utf-8 -*-
-
 import os
-
-from .context import sister_watchd
 
 import mock
 import requests
-import unittest
+
+from django.test import TestCase
+
+from helpers import ceryx
 
 
-class CeryxClientTestSuite(unittest.TestCase):
+class CeryxClientTestSuite(TestCase):
     """Tests for the Ceryx client."""
 
     @classmethod
     def setUpClass(cls):
-        cls.mck_requests = mock.patch('sister_watchd.ceryx.requests')
+        super(CeryxClientTestSuite, cls).setUpClass()
+        cls.mck_requests = mock.patch('helpers.ceryx.requests')
         cls.api_host = 'https://ceryx.sister.io'
         cls.routes_url = os.path.join(cls.api_host, 'api/routes')
         cls.route_details_url = os.path.join(cls.routes_url, '{}')
@@ -22,7 +22,7 @@ class CeryxClientTestSuite(unittest.TestCase):
         cls.target = 'sister-00.servers.lair.io:55842'
 
     def setUp(self):
-        self.client = sister_watchd.ceryx.Client(self.api_host)
+        self.client = ceryx.Client(self.api_host)
         self.mck_requests_patch = self.mck_requests.start()
 
     def tearDown(self):
@@ -36,7 +36,7 @@ class CeryxClientTestSuite(unittest.TestCase):
             auth=None)
 
     def test_unset_route(self):
-        assert self.client.unset_route(self.source)
+        self.assertTrue(self.client.unset_route(self.source))
         self.mck_requests_patch.delete.assert_called_once_with(
             self.route_details_url.format(self.source, auth=None))
 
@@ -48,10 +48,6 @@ class CeryxClientTestSuite(unittest.TestCase):
         self.mck_requests_patch.delete.return_value = response
         # Revert exceptions to normal, in order to be able to catch it
         self.mck_requests_patch.exceptions = requests.exceptions
-        assert self.client.unset_route(self.source) is False
+        self.assertFalse(self.client.unset_route(self.source))
         self.mck_requests_patch.delete.assert_called_once_with(
             self.route_details_url.format(self.source, auth=None))
-
-
-if __name__ == '__main__':
-    unittest.main()

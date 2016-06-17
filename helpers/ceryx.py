@@ -66,6 +66,5 @@ class Client(object):
         except requests.exceptions.HTTPError:
             if resp.status_code == 404:
                 return False
-            print resp.status_code
             raise
         return True
