@@ -1,3 +1,5 @@
 # Ignore built files
 *.py[cod]
 *.egg-info
+.env
+db.sqlite3
