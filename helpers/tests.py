@@ -4,6 +4,7 @@ import mock
 import requests
 
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from helpers import ceryx
 
@@ -52,9 +53,8 @@ class CeryxClientTestSuite(TestCase):
         self.mck_requests_patch.delete.assert_called_once_with(
             self.route_details_url.format(self.source, auth=None))
 
-    @mock.patch('helpers.ceryx.settings',
-                CERYX_API_HOST='https://ceryx.example.org')
-    def test_default_client(self, mck_settings):
+    @override_settings(CERYX_API_HOST='https://ceryx.example.org')
+    def test_default_client(self):
         client = ceryx.Client.get_default()
         self.assertEqual(client.api_host,
                          'https://ceryx.example.org/api/routes')
