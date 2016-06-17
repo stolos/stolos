@@ -1,0 +1,2 @@
+nose
+docker-py==1.8.1
