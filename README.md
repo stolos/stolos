@@ -43,4 +43,3 @@ If domain is `project.apps.lair.io` and has `web` and `api` services with the `u
 * `project.apps.lair.io` will point to `web`
 * `project-web.apps.lair.io` will point to `web`
 * `project-api.apps.lair.io` will point to `api`
-
