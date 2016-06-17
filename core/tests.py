@@ -4,8 +4,10 @@ import mock
 import requests
 
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from core import models
+from core import watcher
 
 
 class ProjectRoutingConfigTestSuite(TestCase):
@@ -57,3 +59,24 @@ class ProjectRoutingConfigTestSuite(TestCase):
         self.assertEquals(
             self.config._get_domains_for_service_no_subdomains('svc'),
             ['project-svc.apps.lair.io'])
+
+
+class WatcherTestSuite(TestCase):
+    """Tests the logic of the watcher."""
+
+    @override_settings(DOCKER_HOST='unix:///var/run/sister/docker.sock')
+    def test_get_docker_client_unix(self):
+        """Tests that a correct Docker client is returned"""
+        self.assertEquals(watcher._get_docker_client().base_url,
+                          'http+docker://localunixsocket')
+
+    @override_settings(DOCKER_HOST='tcp://docker.example.com:4242',
+                       DOCKER_CERT_PATH='/var/sister/certs')
+    @mock.patch('os.path.isfile', return_value=True)
+    def test_get_docker_client(self, mck_isfile):
+        """Tests that a correct Docker client is returned"""
+        client = watcher._get_docker_client()
+        self.assertEquals(client.base_url, 'https://docker.example.com:4242')
+        self.assertEquals(client.verify, '/var/sister/certs/ca.pem')
+        self.assertEquals(client.cert, ('/var/sister/certs/cert.pem',
+                                        '/var/sister/certs/key.pem'))

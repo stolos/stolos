@@ -139,3 +139,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 
 # Ceryx settings
 CERYX_API_HOST = os.getenv('SISTER_WATCHD_CERYX_API_HOST')
+
+# Docker settings
+DOCKER_HOST = os.getenv('DOCKER_HOST')
+DOCKER_CERT_PATH = os.getenv('DOCKER_CERT_PATH')
