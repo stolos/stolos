@@ -20,7 +20,10 @@ class ProjectRoutingConfig(models.Model):
         Args:
             service_name: The name of the service to create the domain for.
         """
-        return []
+        if self.config.get('subdomains') is True:
+            return self._get_domains_for_service_with_subdomains(service_name)
+        else:
+            return self._get_domains_for_service_no_subdomains(service_name)
 
 
     def _get_domains_for_service_with_subdomains(self, service_name):
@@ -30,7 +33,10 @@ class ProjectRoutingConfig(models.Model):
         Args:
             service_name: The name of the service to create the domain for.
         """
-        return []
+        service_domain = '.'.join([service_name, self.domain])
+        if service_name == 'web':
+            return [self.domain, service_domain]
+        return [service_domain]
 
 
     def _get_domains_for_service_no_subdomains(self, service_name):
@@ -40,4 +46,8 @@ class ProjectRoutingConfig(models.Model):
         Args:
             service_name: The name of the service to create the domain for.
         """
-        return []
+        subdomain, _, domain = self.domain.partition('.')
+        service_domain = '{}-{}.{}'.format(subdomain, service_name, domain)
+        if service_name == 'web':
+            return [self.domain, service_domain]
+        return [service_domain]
