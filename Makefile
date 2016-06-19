@@ -10,6 +10,9 @@ migrate:
 makemigrations:
 	./manage.py makemigrations
 
+watch:
+	./manage.py watch
+
 test:
 	./manage.py test
 

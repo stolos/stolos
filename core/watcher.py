@@ -3,6 +3,7 @@ import os
 import docker
 
 from django.conf import settings
+from django.core.cache import cache
 
 from core import models
 from core import tasks
@@ -16,7 +17,8 @@ def _get_docker_client():
             client_cert=(
                 os.path.join(settings.DOCKER_CERT_PATH, 'cert.pem'),
                 os.path.join(settings.DOCKER_CERT_PATH, 'key.pem')),
-            verify=os.path.join(settings.DOCKER_CERT_PATH, 'ca.pem'))
+            verify=os.path.join(settings.DOCKER_CERT_PATH, 'ca.pem'),
+            assert_hostname=False)
     return docker.Client(base_url=settings.DOCKER_HOST, tls=tls_config)
 
 
@@ -118,3 +120,12 @@ def process_event(event):
         _process_event_die(event)
         return True
     return False
+
+
+def watch():
+    """Starts watching the Docker daemon for events and dispatches them."""
+    since = cache.get('watcher:since')
+    client = _get_docker_client()
+    for event in client.events(decode=True, since=since):
+        process_event(event)
+        cache.set('watcher:since', event['time'])
