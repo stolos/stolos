@@ -1,4 +1,5 @@
 import os
+import uuid
 
 import mock
 import requests
@@ -64,6 +65,38 @@ class ProjectRoutingConfigTestSuite(TestCase):
 class WatcherTestSuite(TestCase):
     """Tests the logic of the watcher."""
 
+    @classmethod
+    def setUpClass(cls):
+        super(WatcherTestSuite, cls).setUpClass()
+        cls.routing_config = models.ProjectRoutingConfig(config={})
+        cls.routing_config.save()
+        project_id = cls.routing_config.project_id
+        cls.mck_inspect_return = {
+            'Config': {
+                'Labels': {
+                    'com.docker.compose.project': project_id,
+                    'com.docker.compose.service': 'some-service',
+                    'com.docker.compose.oneoff': 'False',
+                    'com.docker.compose.container-number': '1',
+                }
+            },
+            'NetworkSettings': {
+                'Ports': {
+                    '8000/tcp': [
+                        {
+                            'HostIp': '0.0.0.0',
+                            'HostPort': '32771'
+                        }
+                    ]
+                },
+            }
+        }
+
+    @classmethod
+    def tearDownClass(cls):
+        super(WatcherTestSuite, cls).tearDownClass()
+        cls.routing_config.delete()
+
     @override_settings(DOCKER_HOST='unix:///var/run/sister/docker.sock')
     def test_get_docker_client_unix(self):
         """Tests that a correct Docker client is returned"""
@@ -80,3 +113,101 @@ class WatcherTestSuite(TestCase):
         self.assertEquals(client.verify, '/var/sister/certs/ca.pem')
         self.assertEquals(client.cert, ('/var/sister/certs/cert.pem',
                                         '/var/sister/certs/key.pem'))
+
+    def test_should_route_container(self):
+        self.assertTrue(
+            watcher._should_route_container(self.mck_inspect_return))
+        for key in ['com.docker.compose.project',
+                    'com.docker.compose.service',
+                    'com.docker.compose.oneoff',
+                    'com.docker.compose.container-number']:
+            container = self.mck_inspect_return.copy()
+            del container['Config']['Labels'][key]
+            self.assertFalse(watcher._should_route_container(container))
+
+    def test_should_route_container_oneoff(self):
+        container = self.mck_inspect_return.copy()
+        container['Config']['Labels'][
+            'com.docker.compose.oneoff'] = 'True'
+        self.assertFalse(watcher._should_route_container(container))
+
+    def test_should_route_container_consecutive_container(self):
+        container = self.mck_inspect_return.copy()
+        container['Config']['Labels'][
+            'com.docker.compose.container-number'] = '2'
+        self.assertFalse(watcher._should_route_container(container))
+
+    def test_get_routing_config(self):
+        self.assertEqual(
+            self.routing_config.project_id,
+            watcher._get_routing_config(self.mck_inspect_return).project_id)
+
+    def test_get_routing_config_not_exists(self):
+        container = self.mck_inspect_return.copy()
+        container['Config']['Labels'][
+            'com.docker.compose.project'] = uuid.uuid4()
+        self.assertIsNone(watcher._get_routing_config(container))
+
+    def test_get_routing_config_invalid_id(self):
+        container = self.mck_inspect_return.copy()
+        container['Config']['Labels'][
+            'com.docker.compose.project'] = 'invalid-uuid'
+        self.assertIsNone(watcher._get_routing_config(container))
+
+    def test_get_service(self):
+        self.assertEqual('some-service',
+                         watcher._get_service(self.mck_inspect_return))
+
+    def test_get_container_url(self):
+        self.assertEqual('localhost:32771',
+                         watcher._get_container_url(self.mck_inspect_return))
+
+    @override_settings(DOCKER_IP='sister-00.servers.lair.io')
+    def test_get_container_url_dokcer_ip(self):
+        self.assertEqual('sister-00.servers.lair.io:32771',
+                         watcher._get_container_url(self.mck_inspect_return))
+
+    def test_get_container_url_no_ports(self):
+        container = self.mck_inspect_return.copy()
+        container['NetworkSettings']['Ports'] = {}
+        self.assertIsNone(watcher._get_container_url(container))
+
+    @mock.patch('core.watcher._should_route_container', return_value=True)
+    @mock.patch('core.watcher._get_service', return_value='web')
+    @mock.patch('core.watcher._get_container_url',
+                return_value='sister-00.servers.lair.io:4242')
+    @mock.patch('core.models.ProjectRoutingConfig.get_domains_for_service',
+                return_value=['project.apps.lair.io',
+                              'project-web.apps.lair.io'])
+    # Arguments are in reverse order
+    @mock.patch('core.watcher.tasks.set_route.delay')
+    @mock.patch('core.watcher.docker.Client.inspect_container')
+    @mock.patch('core.watcher._get_routing_config')
+    def test_process_event_start(self, mck_get_routing_config, mck_inspect,
+                                 mck_task, *args):
+        mck_get_routing_config.return_value = self.routing_config
+        mck_inspect.return_value = self.mck_inspect_return
+        watcher._process_event_start({})
+        mck_task.assert_has_calls([
+            mock.call('project.apps.lair.io',
+                      'sister-00.servers.lair.io:4242'),
+            mock.call('project-web.apps.lair.io',
+                      'sister-00.servers.lair.io:4242')])
+
+    @mock.patch('core.watcher._should_route_container', return_value=True)
+    @mock.patch('core.watcher._get_service', return_value='web')
+    @mock.patch('core.models.ProjectRoutingConfig.get_domains_for_service',
+                return_value=['project.apps.lair.io',
+                              'project-web.apps.lair.io'])
+    # Arguments are in reverse order
+    @mock.patch('core.watcher.tasks.unset_route.delay')
+    @mock.patch('core.watcher.docker.Client.inspect_container')
+    @mock.patch('core.watcher._get_routing_config')
+    def test_process_event_die(self, mck_get_routing_config, mck_inspect,
+                                 mck_task, *args):
+        mck_get_routing_config.return_value = self.routing_config
+        mck_inspect.return_value = self.mck_inspect_return
+        watcher._process_event_die({})
+        mck_task.assert_has_calls([
+            mock.call('project.apps.lair.io'),
+            mock.call('project-web.apps.lair.io')])
