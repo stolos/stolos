@@ -158,12 +158,8 @@ class WatcherTestSuite(TestCase):
         self.assertEqual('some-service',
                          watcher._get_service(self.mck_inspect_return))
 
-    def test_get_container_url(self):
-        self.assertEqual('localhost:32771',
-                         watcher._get_container_url(self.mck_inspect_return))
-
     @override_settings(DOCKER_IP='sister-00.servers.lair.io')
-    def test_get_container_url_dokcer_ip(self):
+    def test_get_container_url(self):
         self.assertEqual('sister-00.servers.lair.io:32771',
                          watcher._get_container_url(self.mck_inspect_return))
 

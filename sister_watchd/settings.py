@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'djcelery',
+    'django_nose',
 
     'core',
     'helpers',
@@ -145,3 +145,10 @@ CERYX_API_HOST = os.getenv('SISTER_WATCHD_CERYX_API_HOST')
 DOCKER_HOST = os.getenv('DOCKER_HOST')
 DOCKER_CERT_PATH = os.getenv('DOCKER_CERT_PATH')
 DOCKER_IP = os.getenv('DOCKER_IP', 'localhost')
+
+# Nose settings
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=core,helpers',
+]
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

@@ -1,8 +1,13 @@
 celery[redis]==3.1.23
+coverage==4.1
 dj-database-url==0.4.1
+django-cache-url==1.0.0
+django-cache-url==1.0.0
+django-redis==4.4.3
+django-redis==4.4.3
+django==1.9.7
 docker-py==1.8.1
 mock==2.0.0
 nose
 psycopg2==2.6.1
-django-cache-url==1.0.0
-django-redis==4.4.3
+requests[security]==2.10.0
