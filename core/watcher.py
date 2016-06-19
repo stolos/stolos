@@ -1,4 +1,5 @@
 import os
+import logging
 
 import docker
 
@@ -7,6 +8,9 @@ from django.core.cache import cache
 
 from core import models
 from core import tasks
+
+
+LOGGER = logging.getLogger('django')
 
 
 def _get_docker_client():
@@ -67,7 +71,7 @@ def _get_container_url(container):
     ports = container['NetworkSettings']['Ports']
     port = None
     for port_key in ports:
-        if 'tcp' in port_key:
+        if 'tcp' in port_key and ports[port_key] is not None:
             port = ports[port_key][0]['HostPort']
     if not port:
         return None
@@ -112,13 +116,20 @@ def _process_event_die(event):
 def process_event(event):
     """Processes events from Docker. Dispatches each even to the correct
     function."""
+    event_type = event['Type']
+    if event_type != 'container':
+        LOGGER.debug('Discarding event of type %s', event_type)
+        return
     status = event['status']
+    container_id = event['id']
+    LOGGER.info('Processing event %s -> %s', container_id, status)
     if status == 'start':
-        _process_event_start(event)
+        _process_event_start(container_id)
         return True
     if status == 'die':
-        _process_event_die(event)
+        _process_event_die(container_id)
         return True
+    LOGGER.debug('Discarding event %s -> %s', container_id, status)
     return False
 
 

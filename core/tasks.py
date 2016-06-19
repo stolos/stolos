@@ -12,7 +12,7 @@ def set_route(self, source, target):
         result = client.set_route(source, target)
     except (ConnectionError, Timeout, HTTPError) as exc:
         raise self.retry(exc=exc)
-	return result
+	return {'set': True, 'source': source, 'target': target}
 
 
 @celery_app.task(bind=True, default_retry_delay=10)
@@ -22,4 +22,4 @@ def unset_route(self, source):
         result = client.unset_route(source)
     except (ConnectionError, Timeout, HTTPError) as exc:
         raise self.retry(exc=exc)
-	return {'Removed': result}
+	return {'unset': True, 'source': source}

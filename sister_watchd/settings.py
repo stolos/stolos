@@ -128,14 +128,15 @@ STATIC_URL = '/static/'
 # Caches settings
 
 import django_cache_url
-CACHES = {'default': django_cache_url.config(
-    os.getenv('REDIS_URL', 'locmem://sister_watchd'))}
+CACHES = {'default': django_cache_url.config('REDIS_URL')}
 
 
 # Celery settings
 BROKER_URL = os.getenv('REDIS_URL')
 CELERY_RESULT_BACKEND = BROKER_URL
 CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # Ceryx settings
 CERYX_API_HOST = os.getenv('SISTER_WATCHD_CERYX_API_HOST')

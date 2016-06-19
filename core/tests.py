@@ -220,10 +220,11 @@ class WatcherTestSuite(TestCase):
                        'exec_create', 'exec_start', 'export', 'kill', 'oom',
                        'pause', 'rename', 'resize', 'restart',
                        'stop', 'top', 'unpause', 'update']:
-            self.assertFalse(watcher.process_event({'status': status}))
-        event = {'status': 'start'}
+            self.assertFalse(watcher.process_event(
+                {'status': status, 'Type': 'container', 'id': 'some-id'}))
+        event = {'status': 'start', 'Type': 'container', 'id': 'some-id'}
         self.assertTrue(watcher.process_event(event))
-        mck_start.assert_called_once_with(event)
-        event = {'status': 'die'}
+        mck_start.assert_called_once_with('some-id')
+        event = {'status': 'die', 'Type': 'container', 'id': 'some-id'}
         self.assertTrue(watcher.process_event(event))
-        mck_die.assert_called_once_with(event)
+        mck_die.assert_called_once_with('some-id')
