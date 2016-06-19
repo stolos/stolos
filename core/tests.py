@@ -211,3 +211,19 @@ class WatcherTestSuite(TestCase):
         mck_task.assert_has_calls([
             mock.call('project.apps.lair.io'),
             mock.call('project-web.apps.lair.io')])
+
+
+    @mock.patch('core.watcher._process_event_die')
+    @mock.patch('core.watcher._process_event_start')
+    def test_process_event(self, mck_start, mck_die):
+        for status in ['attach', 'commit', 'copy', 'create', 'destroy',
+                       'exec_create', 'exec_start', 'export', 'kill', 'oom',
+                       'pause', 'rename', 'resize', 'restart',
+                       'stop', 'top', 'unpause', 'update']:
+            self.assertFalse(watcher.process_event({'status': status}))
+        event = {'status': 'start'}
+        self.assertTrue(watcher.process_event(event))
+        mck_start.assert_called_once_with(event)
+        event = {'status': 'die'}
+        self.assertTrue(watcher.process_event(event))
+        mck_die.assert_called_once_with(event)

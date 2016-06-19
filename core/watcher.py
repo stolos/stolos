@@ -105,3 +105,16 @@ def _process_event_die(event):
     domains = project_routing_config.get_domains_for_service(service)
     for domain in domains:
         tasks.unset_route.delay(domain)
+
+
+def process_event(event):
+    """Processes events from Docker. Dispatches each even to the correct
+    function."""
+    status = event['status']
+    if status == 'start':
+        _process_event_start(event)
+        return True
+    if status == 'die':
+        _process_event_die(event)
+        return True
+    return False
