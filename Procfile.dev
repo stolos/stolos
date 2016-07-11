@@ -1,0 +1,3 @@
+web: make dev
+worker: make worker
+watcher: make watch
