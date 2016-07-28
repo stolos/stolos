@@ -1,16 +1,16 @@
-# sister-watchd
+# stolos-watchd
 Watch Docker daemon for events and update [ceryx](https://github.com/sourcelair/ceryx) accordingly
 
 ## Data structure
 
-`sister-watchd` understands projects and services in the same way that Docker Compose understands them. On top of that, it also understands domain names and configuration options for domain name/project mappings. A typical mapping can be found below:
+`stolos-watchd` understands projects and services in the same way that Docker Compose understands them. On top of that, it also understands domain names and configuration options for domain name/project mappings. A typical mapping can be found below:
 
 ```json
 {
   "project-name": {
     "domain": "domain.name",
     "config": {
-      "use-subdomains": true;
+      "use-subdomains": true
     }
   }
 }
@@ -18,7 +18,7 @@ Watch Docker daemon for events and update [ceryx](https://github.com/sourcelair/
 
 ## Logic
 
-`sister-watchd` watches the given Docker engine for events and reacts to the following ones:
+`stolos-watchd` watches the given Docker engine for events and reacts to the following ones:
 * `start` - when a container starts, its service is exposed
 * `die` - when a container dies, its service route is removed
 

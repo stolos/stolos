@@ -16,11 +16,11 @@ class CeryxClientTestSuite(TestCase):
     def setUpClass(cls):
         super(CeryxClientTestSuite, cls).setUpClass()
         cls.mck_requests = mock.patch('helpers.ceryx.requests')
-        cls.api_host = 'https://ceryx.sister.io'
+        cls.api_host = 'https://ceryx.stolos.io'
         cls.routes_url = os.path.join(cls.api_host, 'api/routes')
         cls.route_details_url = os.path.join(cls.routes_url, '{}')
         cls.source = 'project.apps.lair.io'
-        cls.target = 'sister-00.servers.lair.io:55842'
+        cls.target = 'stolos-00.servers.lair.io:55842'
 
     def setUp(self):
         self.client = ceryx.Client(self.api_host)

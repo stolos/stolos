@@ -1,6 +1,6 @@
 from requests.exceptions import ConnectionError, HTTPError, Timeout
 
-from sister_watchd import celery_app
+from stolos_watchd import celery_app
 
 from helpers import ceryx
 
