@@ -7,7 +7,7 @@ from django.db import models
 
 
 class ProjectRoutingConfig(models.Model):
-    """Configuration model for sister projects"""
+    """Configuration model for stolos projects"""
     project_id = models.UUIDField(default=uuid4, primary_key=True)
     user_id = models.CharField(max_length=30, blank=True)
     domain = models.CharField(max_length=256)
@@ -51,3 +51,6 @@ class ProjectRoutingConfig(models.Model):
         if service_name == 'web':
             return [self.domain, service_domain]
         return [service_domain]
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.project_id, self.domain)

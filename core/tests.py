@@ -97,22 +97,22 @@ class WatcherTestSuite(TestCase):
         super(WatcherTestSuite, cls).tearDownClass()
         cls.routing_config.delete()
 
-    @override_settings(DOCKER_HOST='unix:///var/run/sister/docker.sock')
+    @override_settings(DOCKER_HOST='unix:///var/run/stolos/docker.sock')
     def test_get_docker_client_unix(self):
         """Tests that a correct Docker client is returned"""
         self.assertEquals(watcher._get_docker_client().base_url,
                           'http+docker://localunixsocket')
 
     @override_settings(DOCKER_HOST='tcp://docker.example.com:4242',
-                       DOCKER_CERT_PATH='/var/sister/certs')
+                       DOCKER_CERT_PATH='/var/stolos/certs')
     @mock.patch('os.path.isfile', return_value=True)
     def test_get_docker_client(self, mck_isfile):
         """Tests that a correct Docker client is returned"""
         client = watcher._get_docker_client()
         self.assertEquals(client.base_url, 'https://docker.example.com:4242')
-        self.assertEquals(client.verify, '/var/sister/certs/ca.pem')
-        self.assertEquals(client.cert, ('/var/sister/certs/cert.pem',
-                                        '/var/sister/certs/key.pem'))
+        self.assertEquals(client.verify, '/var/stolos/certs/ca.pem')
+        self.assertEquals(client.cert, ('/var/stolos/certs/cert.pem',
+                                        '/var/stolos/certs/key.pem'))
 
     def test_should_route_container(self):
         self.assertTrue(
@@ -158,9 +158,9 @@ class WatcherTestSuite(TestCase):
         self.assertEqual('some-service',
                          watcher._get_service(self.mck_inspect_return))
 
-    @override_settings(DOCKER_IP='sister-00.servers.lair.io')
+    @override_settings(DOCKER_IP='stolos-00.servers.lair.io')
     def test_get_container_url(self):
-        self.assertEqual('sister-00.servers.lair.io:32771',
+        self.assertEqual('stolos-00.servers.lair.io:32771',
                          watcher._get_container_url(self.mck_inspect_return))
 
     def test_get_container_url_no_ports(self):
@@ -171,7 +171,7 @@ class WatcherTestSuite(TestCase):
     @mock.patch('core.watcher._should_route_container', return_value=True)
     @mock.patch('core.watcher._get_service', return_value='web')
     @mock.patch('core.watcher._get_container_url',
-                return_value='sister-00.servers.lair.io:4242')
+                return_value='stolos-00.servers.lair.io:4242')
     @mock.patch('core.models.ProjectRoutingConfig.get_domains_for_service',
                 return_value=['project.apps.lair.io',
                               'project-web.apps.lair.io'])
@@ -186,9 +186,9 @@ class WatcherTestSuite(TestCase):
         watcher._process_event_start({})
         mck_task.assert_has_calls([
             mock.call('project.apps.lair.io',
-                      'sister-00.servers.lair.io:4242'),
+                      'stolos-00.servers.lair.io:4242'),
             mock.call('project-web.apps.lair.io',
-                      'sister-00.servers.lair.io:4242')])
+                      'stolos-00.servers.lair.io:4242')])
 
     @mock.patch('core.watcher._should_route_container', return_value=True)
     @mock.patch('core.watcher._get_service', return_value='web')

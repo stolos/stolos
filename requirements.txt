@@ -3,6 +3,7 @@ coverage==4.1
 dj-database-url==0.4.1
 django-cache-url==1.0.0
 django-cache-url==1.0.0
+django-nose==1.4.4
 django-redis==4.4.3
 django-redis==4.4.3
 django==1.9.7

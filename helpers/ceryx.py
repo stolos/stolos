@@ -36,7 +36,7 @@ class Client(object):
 
             {
                 'source': 'project.apps.lair.io',
-                'target': "sister-00.servers.lair.io:45678"
+                'target': "stolos-00.servers.lair.io:45678"
             }
 
         Raises:
