@@ -7,8 +7,8 @@ import requests
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from core import models
-from core import watcher
+from stolos_watchd import models
+from stolos_watchd import watcher
 
 
 class ProjectRoutingConfigTestSuite(TestCase):
@@ -25,7 +25,7 @@ class ProjectRoutingConfigTestSuite(TestCase):
         cls.config_no_sub.config = {'subdomains': False}
 
     @mock.patch(
-        'core.models.ProjectRoutingConfig'
+        'stolos_watchd.models.ProjectRoutingConfig'
         '._get_domains_for_service_with_subdomains')
     def test_get_domains_for_service_with_subdomains(self, mck_get_domains):
         self.assertEquals(self.config.get_domains_for_service('some_service'),
@@ -33,7 +33,7 @@ class ProjectRoutingConfigTestSuite(TestCase):
         mck_get_domains.assert_called_once_with('some_service')
 
     @mock.patch(
-        'core.models.ProjectRoutingConfig'
+        'stolos_watchd.models.ProjectRoutingConfig'
         '._get_domains_for_service_no_subdomains')
     def test_get_domains_for_service_no_subdomains(self, mck_get_domains):
         self.assertEquals(
@@ -168,17 +168,17 @@ class WatcherTestSuite(TestCase):
         container['NetworkSettings']['Ports'] = {}
         self.assertIsNone(watcher._get_container_url(container))
 
-    @mock.patch('core.watcher._should_route_container', return_value=True)
-    @mock.patch('core.watcher._get_service', return_value='web')
-    @mock.patch('core.watcher._get_container_url',
+    @mock.patch('stolos_watchd.watcher._should_route_container', return_value=True)
+    @mock.patch('stolos_watchd.watcher._get_service', return_value='web')
+    @mock.patch('stolos_watchd.watcher._get_container_url',
                 return_value='stolos-00.servers.lair.io:4242')
-    @mock.patch('core.models.ProjectRoutingConfig.get_domains_for_service',
+    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service',
                 return_value=['project.apps.lair.io',
                               'project-web.apps.lair.io'])
     # Arguments are in reverse order
-    @mock.patch('core.watcher.tasks.set_route.delay')
-    @mock.patch('core.watcher.docker.Client.inspect_container')
-    @mock.patch('core.watcher._get_routing_config')
+    @mock.patch('stolos_watchd.watcher.tasks.set_route.delay')
+    @mock.patch('stolos_watchd.watcher.docker.Client.inspect_container')
+    @mock.patch('stolos_watchd.watcher._get_routing_config')
     def test_process_event_start(self, mck_get_routing_config, mck_inspect,
                                  mck_task, *args):
         mck_get_routing_config.return_value = self.routing_config
@@ -190,15 +190,15 @@ class WatcherTestSuite(TestCase):
             mock.call('project-web.apps.lair.io',
                       'stolos-00.servers.lair.io:4242')])
 
-    @mock.patch('core.watcher._should_route_container', return_value=True)
-    @mock.patch('core.watcher._get_service', return_value='web')
-    @mock.patch('core.models.ProjectRoutingConfig.get_domains_for_service',
+    @mock.patch('stolos_watchd.watcher._should_route_container', return_value=True)
+    @mock.patch('stolos_watchd.watcher._get_service', return_value='web')
+    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service',
                 return_value=['project.apps.lair.io',
                               'project-web.apps.lair.io'])
     # Arguments are in reverse order
-    @mock.patch('core.watcher.tasks.unset_route.delay')
-    @mock.patch('core.watcher.docker.Client.inspect_container')
-    @mock.patch('core.watcher._get_routing_config')
+    @mock.patch('stolos_watchd.watcher.tasks.unset_route.delay')
+    @mock.patch('stolos_watchd.watcher.docker.Client.inspect_container')
+    @mock.patch('stolos_watchd.watcher._get_routing_config')
     def test_process_event_die(self, mck_get_routing_config, mck_inspect,
                                  mck_task, *args):
         mck_get_routing_config.return_value = self.routing_config
@@ -209,8 +209,8 @@ class WatcherTestSuite(TestCase):
             mock.call('project-web.apps.lair.io')])
 
 
-    @mock.patch('core.watcher._process_event_die')
-    @mock.patch('core.watcher._process_event_start')
+    @mock.patch('stolos_watchd.watcher._process_event_die')
+    @mock.patch('stolos_watchd.watcher._process_event_start')
     def test_process_event(self, mck_start, mck_die):
         for status in ['attach', 'commit', 'copy', 'create', 'destroy',
                        'exec_create', 'exec_start', 'export', 'kill', 'oom',

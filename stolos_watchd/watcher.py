@@ -6,8 +6,8 @@ import docker
 from django.conf import settings
 from django.core.cache import cache
 
-from core import models
-from core import tasks
+from stolos_watchd import models
+from stolos_watchd import tasks
 
 
 LOGGER = logging.getLogger('django')
