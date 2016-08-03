@@ -13,12 +13,20 @@ class ServerSerializer(serializers.ModelSerializer):
         model = models.Server
 
 
+class StackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Stack
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     routing_config = ProjectRoutingConfigSerializer(many=False)
-    stack = serializers.SlugRelatedField(
+    server = ServerSerializer(many=False, read_only=True)
+    set_stack = serializers.SlugRelatedField(
         slug_field='slug',
         queryset=models.Stack.objects.all(),
+        write_only=True,
     )
+    stack = StackSerializer(many=False, read_only=True)
     owner = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username',
@@ -33,12 +41,13 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Project
-        fields = ('uuid', 'stack', 'server', 'owner', 'created', 'last_update',
-                  'routing_config')
+        fields = ('uuid', 'stack', 'set_stack', 'server', 'owner', 'created',
+                  'last_update', 'routing_config')
         read_only_fields = ('uuid', 'server', 'created', 'last_update')
 
     def create(self, validated_data):
         routing_config = validated_data.pop('routing_config')
+        validated_data['stack'] = validated_data.pop('set_stack')
         project = models.Project(**validated_data)
         project.save()
         ProjectRoutingConfig(project=project, **routing_config).save()
