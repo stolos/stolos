@@ -22,7 +22,6 @@ Stacks are the basic building blocks of Stolos projects. Stacks contain the need
 
 * `docker_compose_file`: base64 encoded Docker compose file
 * `owner`: the company owning this stack
-* `groups`: the user groups that have access to this stack
 * `created`: the date this stack was created
 * `last_update`: the date this stack was last updated
 
@@ -50,6 +49,5 @@ Projects are the models that developers have
 * `stack`: the stack that this project relates to
 * `server`: the stolos server this project was assigned
 * `owner`: the user owning this project
-* `groups`: the user groups that have access to this project
 * `created`: the date this project was created
 * `last_update`: the date this project was last updated
