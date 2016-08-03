@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from core import watcher
+from stolos_watchd import watcher
 
 
 class Command(BaseCommand):

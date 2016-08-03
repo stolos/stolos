@@ -20,4 +20,4 @@ test:
 	./manage.py test
 
 worker:
-	celery -A stolos_watchd worker -l info
+	celery -A stolosd worker -l info

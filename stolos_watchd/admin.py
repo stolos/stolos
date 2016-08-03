@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core import models
+from stolos_watchd import models
 
 
 admin.site.register(models.ProjectRoutingConfig)

@@ -5,11 +5,11 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stolos_watchd.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stolosd.settings')
 
 from django.conf import settings
 
-app = Celery('stolos_watchd')
+app = Celery('stolosd')
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
