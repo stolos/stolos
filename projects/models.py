@@ -22,12 +22,12 @@ class Server(models.Model):
     :param last_update: the date this stack was last updated
 
     :type docker_ca_pem: string
-    :param docker_cert_pem: string
-    :param docker_key_pem: string
-    :param unison_id_rsa: string
-    :param host: string
-    :param created: string
-    :param last_update: string
+    :type docker_cert_pem: string
+    :type docker_key_pem: string
+    :type unison_id_rsa: string
+    :type host: string
+    :type created: string
+    :type last_update: string
     """
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4,
                             editable=False)
