@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from uuid import uuid4
+import uuid
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -8,8 +8,11 @@ from django.db import models
 
 class ProjectRoutingConfig(models.Model):
     """Configuration model for stolos projects"""
-    project_id = models.UUIDField(default=uuid4, primary_key=True)
-    user_id = models.CharField(max_length=30, blank=True)
+    project = models.OneToOneField(
+        'projects.Project',
+        on_delete=models.CASCADE,
+        related_name='routing_config',
+    )
     domain = models.CharField(max_length=256)
     config = JSONField()
 

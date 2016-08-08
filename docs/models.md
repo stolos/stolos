@@ -6,10 +6,10 @@ Servers contain the needed information for connecting and syncing files with a S
 
 ### Fields
 
-* `docker_ca_pem`: base64 encoded `ca.pem` (certificate authority certificate) to use for connecting to Docker
-* `docker_cert_pem`: base64 encoded `cert.pem` (client certificate) to use for connecting to Docker
-* `docker_key_pem`: base64 encoded `key.pem` (client private key) to use for connecting to Docker
-* `unison_id_rsa`: base64 encoded `id_rsa` (SSH private key) to use for SSH'ing into the server for Unison
+* `docker_ca_pem`: `ca.pem` (certificate authority certificate) to use for connecting to Docker
+* `docker_cert_pem`: `cert.pem` (client certificate) to use for connecting to Docker
+* `docker_key_pem`: `key.pem` (client private key) to use for connecting to Docker
+* `unison_id_rsa`: `id_rsa` (SSH private key) to use for SSH'ing into the server for Unison
 * `host`: the server IP or hostname to use when connecting
 * `created`: the date this stack was created
 * `last_update`: the date this stack was last updated
@@ -20,9 +20,8 @@ Stacks are the basic building blocks of Stolos projects. Stacks contain the need
 
 ### Fields
 
-* `docker_compose_file`: base64 encoded Docker compose file
+* `docker_compose_file`: Docker compose file
 * `owner`: the company owning this stack
-* `groups`: the user groups that have access to this stack
 * `created`: the date this stack was created
 * `last_update`: the date this stack was last updated
 
@@ -33,7 +32,7 @@ Project routing configs are the corner-stone of [`stolos-watchd`](https://github
 
 ### Fields
 
-* `project_id`: the related project identifier, primary key and also unique
+* `project`: the related project, unique
 * `domain`: the domain name to use as a base when creating the semantic URLs for the project's services
 * `config`: arbitrary key-value configuration options, currently supporting only the `subdomains` option
 * `created`: the date this routing config was created
@@ -50,6 +49,5 @@ Projects are the models that developers have
 * `stack`: the stack that this project relates to
 * `server`: the stolos server this project was assigned
 * `owner`: the user owning this project
-* `groups`: the user groups that have access to this project
 * `created`: the date this project was created
 * `last_update`: the date this project was last updated

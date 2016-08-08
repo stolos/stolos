@@ -40,9 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_nose',
+    'guardian',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 
     'stolos_watchd',
     'helpers',
+    'projects',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -152,3 +157,23 @@ NOSE_ARGS = [
     '--cover-package=core,helpers',
 ]
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Django Guardian settings
+GUARDIAN_RAISE_403 = True
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
+ANONYMOUS_USER_NAME = None
+
+# Rest framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        'stolosd.permissions.DjangoObjectPermissions',
+    ),
+}
