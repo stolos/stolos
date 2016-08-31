@@ -11,7 +11,9 @@ The API contains the Authentication mechanism of Stolos, as well as the needed A
 Before creating Users and Stacks for Stolos, the following things need to happen in the Admin:
 
 1. A Company account should be created in the form of a Group
-2. The Group should be given rights to view, and create Projects
+2. The Group should be given rights to:
+  - view and create Projects
+  - view Stacks
 3. Every user created should be added to it's company's group
 
 ### Documentation
