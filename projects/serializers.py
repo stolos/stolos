@@ -30,7 +30,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username',
-        default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault()),
+        default=serializers.CreateOnlyDefault(
+            serializers.CurrentUserDefault()),
     )
 
     def __init__(self, *args, **kwargs):

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'stolos_watchd',
     'helpers',
     'projects',
+    'users',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -175,5 +176,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
         'stolosd.permissions.DjangoObjectPermissions',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoObjectPermissionsFilter',
+        'rest_framework.filters.DjangoFilterBackend',
     ),
 }

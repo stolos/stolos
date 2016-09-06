@@ -14,3 +14,13 @@ class DjangoObjectPermissions(permissions.DjangoObjectPermissions):
         'PATCH': ['%(app_label)s.change_%(model_name)s'],
         'DELETE': ['%(app_label)s.delete_%(model_name)s'],
     }
+
+
+class ReadOnly(permissions.BasePermission):
+    """
+    ReadOnly permissions.
+    """
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        return request.method in permissions.SAFE_METHODS
