@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+import email.utils
 import os
+
+import dj_database_url
+import django_cache_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,13 +25,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('STOLOSD_SECRET',
+SECRET_KEY = os.getenv('SECRET_KEY',
                        'gb##%!^l!6!^leg&_w#f+)$2mv4b*%(blwa=zao_d7sgd*j3l%')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('PROD') is None
 
 ALLOWED_HOSTS = []
+if os.getenv('ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+
+ADMINS = email.utils.getaddresses(os.getenv('ADMINS', '').split(','))
 
 
 # Application definition
@@ -84,7 +93,6 @@ WSGI_APPLICATION = 'stolosd.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -132,11 +140,10 @@ STATIC_URL = '/static/'
 
 # Caches settings
 
-import django_cache_url
 CACHES = {'default': django_cache_url.config('REDIS_URL')}
 
-
 # Celery settings
+
 BROKER_URL = os.getenv('REDIS_URL')
 CELERY_RESULT_BACKEND = BROKER_URL
 CELERY_ACCEPT_CONTENT = ['json']
@@ -144,14 +151,17 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 # Ceryx settings
+
 CERYX_API_HOST = os.getenv('STOLOS_WATCHD_CERYX_API_HOST')
 
 # Docker settings
+
 DOCKER_HOST = os.getenv('DOCKER_HOST')
 DOCKER_CERT_PATH = os.getenv('DOCKER_CERT_PATH')
 DOCKER_IP = os.getenv('DOCKER_IP', 'localhost')
 
 # Nose settings
+
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=core,helpers',
@@ -159,6 +169,7 @@ NOSE_ARGS = [
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Django Guardian settings
+
 GUARDIAN_RAISE_403 = True
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -177,3 +188,10 @@ REST_FRAMEWORK = {
         'stolosd.permissions.DjangoObjectPermissions',
     ),
 }
+
+# Email settings
+
+SERVER_EMAIL = os.getenv('SERVER_EMAIL', 'stolos@stolos.io')
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = os.getenv('MAILGUN_API_KEY')
+MAILGUN_SERVER_NAME = os.getenv('MAILGUN_SERVER_NAME')
