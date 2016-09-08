@@ -2,10 +2,9 @@ celery[redis]==3.1.23
 coverage==4.1
 dj-database-url==0.4.1
 django-cache-url==1.0.0
-django-cache-url==1.0.0
+django-filter==0.14.0
 django-guardian==1.4.4
 django-nose==1.4.4
-django-redis==4.4.3
 django-redis==4.4.3
 Django==1.9.7
 djangorestframework==3.4.1

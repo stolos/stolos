@@ -181,4 +181,5 @@ REST_FRAMEWORK = {
         'rest_framework.filters.DjangoObjectPermissionsFilter',
         'rest_framework.filters.DjangoFilterBackend',
     ),
+    'EXCEPTION_HANDLER': 'stolosd.error_handling.exception_handler',
 }
