@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'stolos_watchd',
     'helpers',
     'projects',
+    'users',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -187,6 +188,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         'stolosd.permissions.DjangoObjectPermissions',
     ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoObjectPermissionsFilter',
+        'rest_framework.filters.DjangoFilterBackend',
+    ),
+    'EXCEPTION_HANDLER': 'stolosd.error_handling.exception_handler',
 }
 
 # Email settings

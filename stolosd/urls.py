@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/a0.1/auth/', include('stolosd.djoser_urls')),
     url(r'^', include('projects.urls')),
+    url(r'^', include('users.urls')),
 ]
