@@ -28,38 +28,67 @@ class ProjectRoutingConfigTestSuite(TestCase):
         'stolos_watchd.models.ProjectRoutingConfig'
         '._get_domains_for_service_with_subdomains')
     def test_get_domains_for_service_with_subdomains(self, mck_get_domains):
-        self.assertEquals(self.config.get_domains_for_service('some_service'),
-                          mck_get_domains.return_value)
-        mck_get_domains.assert_called_once_with('some_service')
+        self.assertEquals(
+            self.config.get_domains_for_service_per_port('some_service', [4242]),
+            mck_get_domains.return_value)
+        mck_get_domains.assert_called_once_with('some_service', [4242])
 
     @mock.patch(
         'stolos_watchd.models.ProjectRoutingConfig'
         '._get_domains_for_service_no_subdomains')
     def test_get_domains_for_service_no_subdomains(self, mck_get_domains):
         self.assertEquals(
-            self.config_no_sub.get_domains_for_service('some_service'),
+            self.config_no_sub.get_domains_for_service_per_port('some_service', [4242]),
             mck_get_domains.return_value)
-        mck_get_domains.assert_called_once_with('some_service')
+        mck_get_domains.assert_called_once_with('some_service', [4242])
 
     def test_get_domains_for_web_with_subdomains(self):
         self.assertEquals(
-            self.config._get_domains_for_service_with_subdomains('web'),
-            ['project.apps.lair.io', 'web.project.apps.lair.io'])
+            self.config._get_domains_for_service_with_subdomains('web', [4242]),
+            {
+                '4242':[
+                    'web.project.apps.lair.io',
+                    'web.project-4242.apps.lair.io',
+                    'project.apps.lair.io',
+                    'project-4242.apps.lair.io'
+                ]
+            }
+        )
 
     def test_get_domains_for_web_no_subdomains(self):
         self.assertEquals(
-            self.config._get_domains_for_service_no_subdomains('web'),
-            ['project.apps.lair.io', 'project-web.apps.lair.io'])
+            self.config._get_domains_for_service_no_subdomains('web'. [4242]),
+            {
+                '4242':[
+                    'project-web.apps.lair.io',
+                    'project-web-4242.apps.lair.io',
+                    'project.apps.lair.io',
+                    'project-4242.apps.lair.io'
+                ]
+            }
+        )
 
     def test_get_domains_for_svc_with_subdomains(self):
         self.assertEquals(
-            self.config._get_domains_for_service_with_subdomains('svc'),
-            ['svc.project.apps.lair.io'])
+            self.config._get_domains_for_service_with_subdomains('svc', [4242]),
+            {
+                '4242':[
+                    'svc.project.apps.lair.io',
+                    'svc.project-4242.apps.lair.io'
+                ]
+            }
+        )
 
     def test_get_domains_for_svc_no_subdomains(self):
         self.assertEquals(
-            self.config._get_domains_for_service_no_subdomains('svc'),
-            ['project-svc.apps.lair.io'])
+            self.config._get_domains_for_service_no_subdomains('svc', [4242]),
+            {
+                '4242':[
+                    'project-svc.apps.lair.io',
+                    'project-svc-4242.apps.lair.io'
+                ]
+            }
+        )
 
 
 class WatcherTestSuite(TestCase):
