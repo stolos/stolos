@@ -159,7 +159,8 @@ class WatcherTestSuite(TestCase):
     @classmethod
     def setUpClass(cls):
         super(WatcherTestSuite, cls).setUpClass()
-        cls.routing_config = models.ProjectRoutingConfig(config={})
+        cls.routing_config = models.ProjectRoutingConfig(
+            config={}, project_id=uuid.uuid4())
         cls.routing_config.save()
         project_id = cls.routing_config.project_id
         cls.mck_inspect_return = {
@@ -252,20 +253,27 @@ class WatcherTestSuite(TestCase):
     @override_settings(DOCKER_IP='stolos-00.servers.lair.io')
     def test_get_container_url(self):
         self.assertEqual('stolos-00.servers.lair.io:32771',
-                         watcher._get_container_url(self.mck_inspect_return))
+                         watcher._get_container_url(self.mck_inspect_return, 32771))
 
-    def test_get_container_url_no_ports(self):
+    def test_get_container_ports_no_ports(self):
         container = self.mck_inspect_return.copy()
         container['NetworkSettings']['Ports'] = {}
-        self.assertIsNone(watcher._get_container_url(container))
+        self.assertEqual(watcher._get_container_tcp_ports(container), [])
 
+    @override_settings(DOCKER_IP='stolos-00.servers.lair.io')
     @mock.patch('stolos_watchd.watcher._should_route_container', return_value=True)
     @mock.patch('stolos_watchd.watcher._get_service', return_value='web')
-    @mock.patch('stolos_watchd.watcher._get_container_url',
-                return_value='stolos-00.servers.lair.io:4242')
-    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service',
-                return_value=['project.apps.lair.io',
-                              'project-web.apps.lair.io'])
+    @mock.patch('stolos_watchd.watcher._get_container_tcp_ports',
+                return_value=[4242])
+    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service_per_port',
+                return_value={
+                    '4242': [
+                        'project-web.apps.lair.io',
+                        'project-web-4242.apps.lair.io',
+                        'project.apps.lair.io',
+                        'project-4242.apps.lair.io',
+                    ]
+                })
     # Arguments are in reverse order
     @mock.patch('stolos_watchd.watcher.tasks.set_route.delay')
     @mock.patch('stolos_watchd.watcher.docker.Client.inspect_container')
@@ -276,16 +284,29 @@ class WatcherTestSuite(TestCase):
         mck_inspect.return_value = self.mck_inspect_return
         watcher._process_event_start({})
         mck_task.assert_has_calls([
+            mock.call('project-web.apps.lair.io',
+                      'stolos-00.servers.lair.io:4242'),
+            mock.call('project-web-4242.apps.lair.io',
+                      'stolos-00.servers.lair.io:4242'),
             mock.call('project.apps.lair.io',
                       'stolos-00.servers.lair.io:4242'),
-            mock.call('project-web.apps.lair.io',
-                      'stolos-00.servers.lair.io:4242')])
+            mock.call('project-4242.apps.lair.io',
+                      'stolos-00.servers.lair.io:4242'),
+        ])
 
     @mock.patch('stolos_watchd.watcher._should_route_container', return_value=True)
     @mock.patch('stolos_watchd.watcher._get_service', return_value='web')
-    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service',
-                return_value=['project.apps.lair.io',
-                              'project-web.apps.lair.io'])
+    @mock.patch('stolos_watchd.models.ProjectRoutingConfig.get_domains_for_service_per_port',
+                return_value={
+                    '4242': [
+                        'project-web.apps.lair.io',
+                        'project-web-4242.apps.lair.io',
+                        'project.apps.lair.io',
+                        'project-4242.apps.lair.io'
+                    ]
+                })
+    @mock.patch('stolos_watchd.watcher._get_container_tcp_ports',
+                return_value=[4242])
     # Arguments are in reverse order
     @mock.patch('stolos_watchd.watcher.tasks.unset_route.delay')
     @mock.patch('stolos_watchd.watcher.docker.Client.inspect_container')
@@ -296,8 +317,11 @@ class WatcherTestSuite(TestCase):
         mck_inspect.return_value = self.mck_inspect_return
         watcher._process_event_die({})
         mck_task.assert_has_calls([
+            mock.call('project-web.apps.lair.io'),
+            mock.call('project-web-4242.apps.lair.io'),
             mock.call('project.apps.lair.io'),
-            mock.call('project-web.apps.lair.io')])
+            mock.call('project-4242.apps.lair.io')
+        ])
 
 
     @mock.patch('stolos_watchd.watcher._process_event_die')
