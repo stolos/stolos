@@ -57,7 +57,7 @@ class ProjectRoutingConfigTestSuite(TestCase):
 
     def test_get_domains_for_web_no_subdomains(self):
         self.assertEquals(
-            self.config._get_domains_for_service_no_subdomains('web'. [4242]),
+            self.config._get_domains_for_service_no_subdomains('web', [4242]),
             {
                 '4242':[
                     'project-web.apps.lair.io',

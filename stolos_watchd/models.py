@@ -45,13 +45,18 @@ class ProjectRoutingConfig(models.Model):
             return {}
         subdomain, _, domain = self.domain.partition('.')
         service_domains = {
-            str(port[0]): ['.'.join([service_name, self.domain])]
+            str(ports[0]): [
+                '.'.join([service_name, self.domain]),
+                '.'.join([
+                    service_name, '{}-{}.{}'.format(subdomain, ports[0], domain)
+                ])
+            ]
         }
-        for port in ports:
+        for port in ports[1:]:
             service_domains[str(port)] = [
-                '.'.join(
+                '.'.join([
                     service_name, '{}-{}.{}'.format(subdomain, port, domain)
-                )
+                ])
             ]
         if service_name == 'web':
             service_domains[str(ports[0])].append(self.domain)
@@ -75,9 +80,12 @@ class ProjectRoutingConfig(models.Model):
             return {}
         subdomain, _, domain = self.domain.partition('.')
         service_domains = {
-            str(ports[0]): ['{}-{}.{}'.format(subdomain, service_name, domain)]
+            str(ports[0]): [
+                '{}-{}.{}'.format(subdomain, service_name, domain),
+                '{}-{}-{}.{}'.format(subdomain, service_name, ports[0], domain)
+            ]
         }
-        for port in ports:
+        for port in ports[1:]:
             service_domains[str(port)] = [
                 '{}-{}-{}.{}'.format(subdomain, service_name, port, domain)
             ]
