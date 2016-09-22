@@ -46,7 +46,7 @@ class ProjectRoutingConfigTestSuite(TestCase):
         self.assertEquals(
             self.config._get_domains_for_service_with_subdomains('web', [4242]),
             {
-                '4242':[
+                '4242': [
                     'web.project.apps.lair.io',
                     'web.project-4242.apps.lair.io',
                     'project.apps.lair.io',
@@ -55,11 +55,29 @@ class ProjectRoutingConfigTestSuite(TestCase):
             }
         )
 
+    def test_get_domains_for_web_with_subdomains_multiple_ports(self):
+        self.assertEquals(
+            self.config._get_domains_for_service_with_subdomains(
+                'web', [4242, 4243]),
+            {
+                '4242': [
+                    'web.project.apps.lair.io',
+                    'web.project-4242.apps.lair.io',
+                    'project.apps.lair.io',
+                    'project-4242.apps.lair.io'
+                ],
+                '4243': [
+                    'web.project-4243.apps.lair.io',
+                    'project-4243.apps.lair.io'
+                ]
+            }
+        )
+
     def test_get_domains_for_web_no_subdomains(self):
         self.assertEquals(
             self.config._get_domains_for_service_no_subdomains('web', [4242]),
             {
-                '4242':[
+                '4242': [
                     'project-web.apps.lair.io',
                     'project-web-4242.apps.lair.io',
                     'project.apps.lair.io',
@@ -68,13 +86,44 @@ class ProjectRoutingConfigTestSuite(TestCase):
             }
         )
 
+    def test_get_domains_for_web_no_subdomains_multiple_ports(self):
+        self.assertEquals(
+            self.config._get_domains_for_service_no_subdomains('web', [4242, 4243]),
+            {
+                '4242': [
+                    'project-web.apps.lair.io',
+                    'project-web-4242.apps.lair.io',
+                    'project.apps.lair.io',
+                    'project-4242.apps.lair.io'
+                ],
+                '4243': [
+                    'project-web-4243.apps.lair.io',
+                    'project-4243.apps.lair.io'
+                ]
+            }
+        )
+
     def test_get_domains_for_svc_with_subdomains(self):
         self.assertEquals(
             self.config._get_domains_for_service_with_subdomains('svc', [4242]),
             {
-                '4242':[
+                '4242': [
                     'svc.project.apps.lair.io',
                     'svc.project-4242.apps.lair.io'
+                ]
+            }
+        )
+
+    def test_get_domains_for_svc_with_subdomains_multiple_ports(self):
+        self.assertEquals(
+            self.config._get_domains_for_service_with_subdomains('svc', [4242, 4243]),
+            {
+                '4242': [
+                    'svc.project.apps.lair.io',
+                    'svc.project-4242.apps.lair.io'
+                ],
+                '4243': [
+                    'svc.project-4243.apps.lair.io'
                 ]
             }
         )
@@ -83,13 +132,26 @@ class ProjectRoutingConfigTestSuite(TestCase):
         self.assertEquals(
             self.config._get_domains_for_service_no_subdomains('svc', [4242]),
             {
-                '4242':[
+                '4242': [
                     'project-svc.apps.lair.io',
                     'project-svc-4242.apps.lair.io'
                 ]
             }
         )
 
+    def test_get_domains_for_svc_no_subdomains_multiple_ports(self):
+        self.assertEquals(
+            self.config._get_domains_for_service_no_subdomains('svc', [4242, 4243]),
+            {
+                '4242': [
+                    'project-svc.apps.lair.io',
+                    'project-svc-4242.apps.lair.io'
+                ],
+                '4243': [
+                    'project-svc-4243.apps.lair.io'
+                ]
+            }
+        )
 
 class WatcherTestSuite(TestCase):
     """Tests the logic of the watcher."""
