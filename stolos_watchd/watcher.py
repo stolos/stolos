@@ -94,8 +94,6 @@ def _process_event_start(event):
     if service is None:
         return
     ports = _get_container_tcp_ports(container)
-    if len(ports) == 0:
-        return
     domains = project_routing_config.get_domains_for_service_per_port(
         service, ports
     )
@@ -116,8 +114,6 @@ def _process_event_die(event):
     if service is None:
         return
     ports = _get_container_tcp_ports(container)
-    if len(ports) == 0:
-        return
     domains = project_routing_config.get_domains_for_service_per_port(
         service, ports
     )
