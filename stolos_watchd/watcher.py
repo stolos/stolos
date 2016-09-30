@@ -64,17 +64,21 @@ def _get_service(container):
     return container['Config']['Labels']['com.docker.compose.service']
 
 
-def _get_container_url(container):
-    """Returns the container's URL, using the `DOCKER_IP` setting defined in
-    `settings.py` and the first exposed port of the given container, if any or
-    None"""
-    ports = container['NetworkSettings']['Ports']
-    port = None
-    for port_key in ports:
+def _get_container_tcp_ports(container):
+    """Returns the container's tcp ports, if any, or an empty list
+    """
+    container_ports = container['NetworkSettings']['Ports']
+    ports = []
+    for port_key in container_ports:
         if 'tcp' in port_key and ports[port_key] is not None:
-            port = ports[port_key][0]['HostPort']
-    if not port:
-        return None
+            ports.append(container_ports[port_key][0]['HostPort'])
+    return ports
+
+
+def _get_container_url(container, port):
+    """Returns the container's URL, using the `DOCKER_IP` setting defined in
+    `settings.py` and the given port
+    """
     return '{}:{}'.format(settings.DOCKER_IP, port)
 
 
@@ -89,12 +93,13 @@ def _process_event_start(event):
     service = _get_service(container)
     if service is None:
         return
-    url = _get_container_url(container)
-    if url is None:
-        return
-    domains = project_routing_config.get_domains_for_service(service)
-    for domain in domains:
-        tasks.set_route.delay(domain, url)
+    ports = _get_container_tcp_ports(container)
+    domains = project_routing_config.get_domains_for_service_per_port(
+        service, ports
+    )
+    for port in ports:
+        for domain in domains.get(str(port), []):
+            tasks.set_route.delay(domain, _get_container_url(container, port))
 
 
 def _process_event_die(event):
@@ -108,9 +113,13 @@ def _process_event_die(event):
     service = _get_service(container)
     if service is None:
         return
-    domains = project_routing_config.get_domains_for_service(service)
-    for domain in domains:
-        tasks.unset_route.delay(domain)
+    ports = _get_container_tcp_ports(container)
+    domains = project_routing_config.get_domains_for_service_per_port(
+        service, ports
+    )
+    for port in ports:
+        for domain in domains.get(str(port), []):
+            tasks.unset_route.delay(domain)
 
 
 def process_event(event):
