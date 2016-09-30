@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base public --history-api-fallback",
-	"prod": "webpack && node server.js"
+	"prod": "webpack && node server.js",
+	"justbuild": "webpack"
   },
   "author": "",
   "license": "ISC",

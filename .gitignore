@@ -8,3 +8,10 @@ db.sqlite3
 
 # System
 .DS_Store
+
+# Dependency directories
+node_modules
+
+# Build files
+build
+public
