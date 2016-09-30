@@ -1,0 +1,29 @@
+@import url('../../node_modules/bootstrap/dist/css/bootstrap.css');
+
+body {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+body > div,
+body > div > div,
+body > div > div > div {
+	height: 100%;
+}
+
+#content {
+	background-color: whitesmoke;
+}
+
+#header {
+	padding: 1rem;
+	background-color: #171d34;
+	color: white
+}
+
+a.active {
+	color: green;
+}

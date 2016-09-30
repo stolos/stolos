@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'helpers',
     'projects',
     'users',
+    'dashboard'
 ]
 
 MIDDLEWARE_CLASSES = [
