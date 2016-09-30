@@ -24,6 +24,8 @@ class ProjectRoutingConfig(models.Model):
             service_name: The name of the service to create the domain for.
             ports: A list of the ports used by the service.
         """
+        if len(ports) == 0:
+            return {}
         if self.config.get('subdomains') is True:
             return self._get_domains_for_service_with_subdomains(
                 service_name, ports
@@ -41,8 +43,6 @@ class ProjectRoutingConfig(models.Model):
             service_name: The name of the service to create the domain for.
             ports: A list of the ports used by the service.
         """
-        if len(ports) == 0:
-            return {}
         subdomain, _, domain = self.domain.partition('.')
         service_domains = {
             str(ports[0]): [
@@ -76,8 +76,6 @@ class ProjectRoutingConfig(models.Model):
             service_name: The name of the service to create the domain for.
             ports: A list of the ports used by the service.
         """
-        if len(ports) == 0:
-            return {}
         subdomain, _, domain = self.domain.partition('.')
         service_domains = {
             str(ports[0]): [
