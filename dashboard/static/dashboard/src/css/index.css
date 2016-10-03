@@ -1,19 +1,5 @@
 @import url('../../node_modules/bootstrap/dist/css/bootstrap.css');
 
-body {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
-body > div,
-body > div > div,
-body > div > div > div {
-	height: 100%;
-}
-
 #content {
 	background-color: whitesmoke;
 }
@@ -33,4 +19,34 @@ body > div > div > div {
 
 a.active {
 	color: green;
+}
+
+/* Small devices (tablets, 544px and up) */
+@media (min-width: 544px) {
+	body {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	body > div,
+	body > div > div,
+	body > div > div > div {
+		height: 100%;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
 }

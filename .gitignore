@@ -15,3 +15,6 @@ node_modules
 # Build files
 build
 public
+
+#Logs
+npm-debug.log
