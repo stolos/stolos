@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base public --history-api-fallback",
 	"prod": "webpack && node server.js",
-	"justbuild": "webpack"
+	"build": "webpack --watch"
   },
   "author": "",
   "license": "ISC",

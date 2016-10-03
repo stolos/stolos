@@ -18,6 +18,13 @@ body > div > div > div {
 	background-color: whitesmoke;
 }
 
+#sidebar {
+	/* border-right: 1px solid #CFD8DC; */
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.22);
+	position: relative;
+	z-index: 1;
+}
+
 #header {
 	padding: 1rem;
 	background-color: #171d34;
