@@ -7,10 +7,10 @@ export default function() {
 			<h2>Projects</h2>
 			<ul>
 				<li>
-					<NavLink to="/projects/hbtrbr/services" activeClassName="active">Project 1</NavLink>
+					<NavLink to={`hbtrbr/services`} activeClassName="active">Project 1</NavLink>
 				</li>
 				<li>
-					<NavLink to="/projects/vfdvcw/services" activeClassName="active">Project 2</NavLink>
+					<NavLink to={`vevefv/services`} activeClassName="active">Project 2</NavLink>
 				</li>
 			</ul>
 		</div>

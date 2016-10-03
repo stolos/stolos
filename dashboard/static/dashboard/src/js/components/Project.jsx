@@ -1,14 +1,13 @@
 // modules/About.js
 import React from 'react'
-import NavLink from './NavLink'
-import { IndexLink } from 'react-router'
+import { Link } from 'react-router'
 
-export default function(props) {
+export default function Project({ params }) {
 	return (
 		<div>
-			<div>Project uuid: {props.params.uuid}</div>
+			<div>Project uuid: { params.uuid } </div>
 			<div>
-				<IndexLink to="/projects" activeClassName="active">Back to projects</IndexLink>
+				<Link to="/" activeOnlyWhenExact activeClassName="active">Back to projects</Link>
 			</div>
 		</div>
 	)

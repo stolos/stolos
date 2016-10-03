@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { IndexLink } from 'react-router'
-import NavLink from './NavLink'
+import { Link } from 'react-router'
 
 export default class Sidebar extends Component{
 	render() {
@@ -8,8 +7,7 @@ export default class Sidebar extends Component{
 		return (
 			<div className="col-sm-3" id="sidebar">
 				<ul role="nav">
-					<li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
-					<li><NavLink to="/projects">Projects</NavLink></li>
+					<li><Link to="/" activeClassName="active">Projects</Link></li>
 				</ul>
 			</div>
 		)

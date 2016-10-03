@@ -1,12 +1,12 @@
 // modules/About.js
 import React from 'react'
-import NavLink from './NavLink'
+import ProjectsList from './ProjectsList';
 
-export default function({ children }) {
+export default function(props) {
 	console.log('Projects.render()');
 	return (
 		<div>
-			{ children }
+            <ProjectsList { ...props } />
 		</div>
 	)
 }
