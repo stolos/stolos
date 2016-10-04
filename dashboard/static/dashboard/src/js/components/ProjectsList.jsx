@@ -1,12 +1,15 @@
 import React from 'react';
 import NavLink from './NavLink';
+import Project from './Project';
 
 export default function({ projects }) {
+    console.log(projects);
     var projectsList = projects.map(function(project, index) {
+        console.log(project);
         return (
-            <li key = {index} >
-                <NavLink to={`/${project.uuid}/services`} activeClassName="active">Project {index + 1}</NavLink>
-            </li>
+        <li key = {index} >
+            <Project project = { project } />
+        </li>
         );
     });
     return (

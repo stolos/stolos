@@ -10,9 +10,9 @@ export default function Project({ project : { owner, server, stack, uuid } }) {
             <div>Project owner: { owner } </div>
             <div>Stack: { stack.name } </div>
             <div>Server host: { server.host } </div>
-            <div>
+            {/*<div>
                 <Link to="/" activeOnlyWhenExact activeClassName="active">Back to projects</Link>
-            </div>
+            </div>*/}
         </div>
     );
 }
