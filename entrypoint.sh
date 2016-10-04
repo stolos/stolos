@@ -4,8 +4,8 @@ set -e
 function check_port() {
 	local host=${1} && shift
 	local port=${1} && shift
-	local retries=5
-	local wait=1
+	local retries=10
+	local wait=2
 
 	until( $(nc -zv ${host} ${port}) ); do
 		((retries--))
@@ -17,9 +17,9 @@ function check_port() {
 	done
 }
 
-a=${DATABASE_URL##*//}
-check_port "${a%%:*}" "5432"
-a=${REDIS_URL##*//}
-check_port "${a%%:*}" "6379"
+tmp=${DATABASE_URL##*@}
+check_port "${tmp%%:*}" "5432"
+tmp=${REDIS_URL##*//}
+check_port "${tmp%%:*}" "6379"
 
 exec "$@"
