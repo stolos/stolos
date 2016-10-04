@@ -84,7 +84,10 @@ def _get_container_url(container, port):
 
 def _process_event_start(event):
     """Processes a container start, setting the correct routing if needed."""
-    container = _get_docker_client().inspect_container(event)
+    try:
+        container = _get_docker_client().inspect_container(event)
+    except docker.errors.NotFound:
+        return
     if not _should_route_container(container):
         return
     project_routing_config = _get_routing_config(container)
@@ -104,7 +107,10 @@ def _process_event_start(event):
 
 def _process_event_die(event):
     """Processes a container die, unsetting its route if existed."""
-    container = _get_docker_client().inspect_container(event)
+    try:
+        container = _get_docker_client().inspect_container(event)
+    except docker.errors.NotFound:
+        return
     if not _should_route_container(container):
         return
     project_routing_config = _get_routing_config(container)
