@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const validate = require('webpack-validator');
 
 const PATHS = {
-    src: path.resolve(__dirname, 'src'),
-    js: path.resolve(__dirname, 'src', 'js'),
-    css: path.resolve(__dirname, 'src', 'css'),
-    node_modules: path.resolve(__dirname, 'node_modules'),
-    build: path.resolve(__dirname, 'public')
+    src : path.resolve(__dirname, 'src'),
+    js : path.resolve(__dirname, 'src', 'js'),
+    css : path.resolve(__dirname, 'src', 'css'),
+    node_modules : path.resolve(__dirname, 'node_modules'),
+    build : path.resolve(__dirname, 'public')
 };
 
 function isExternal(module) {
@@ -23,12 +23,11 @@ function isExternal(module) {
 }
 
 var config = {
-    devServer: {
-    },
-    entry: {
-        styles: 'index.css',
-        app: 'index.jsx',
-        vendor: [
+    devServer : {},
+    entry : {
+        styles : 'index.css',
+        app : 'index.jsx',
+        vendor : [
             'jquery',
             'bootstrap',
             'react',
@@ -36,59 +35,69 @@ var config = {
             'react-router'
         ]
     },
-    output: {
-        path: PATHS.build,
-        publicPath: '/'
+    output : {
+        path : PATHS.build,
+        publicPath : '/'
     },
-    resolve: {
-        root: [
+    resolve : {
+        root : [
             PATHS.js,
             PATHS.css
         ],
-        extensions: ['', '.js', '.jsx', '.json', '.coffee', '.css']
+        extensions : ['', '.js', '.jsx', '.json', '.coffee', '.css']
     },
-    module: {
-        loaders: [{
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-        }, {
-            test: /\.png$/,
-            loader: 'url-loader?limit=100000'
-        }, {
-            test: /\.jpg$/,
-            loader: 'file-loader'
-        }, {
-            test: /\.gif$/,
-            loader: 'file-loader'
-        }, {
-            test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-woff'
-        }, {
-            test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/octet-stream'
-        }, {
-            test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'file'
-        }, {
-            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=image/svg+xml'
-        }, {
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                presets: ['react', 'es2015']
+    module : {
+        loaders : [
+            {
+                test : /\.css$/,
+                loader : ExtractTextPlugin.extract('style-loader', 'css-loader')
+            },
+            {
+                test : /\.png$/,
+                loader : 'url-loader?limit=100000'
+            },
+            {
+                test : /\.jpg$/,
+                loader : 'file-loader'
+            },
+            {
+                test : /\.gif$/,
+                loader : 'file-loader'
+            },
+            {
+                test : /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                loader : 'url?limit=10000&mimetype=application/font-woff'
+            },
+            {
+                test : /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader : 'url?limit=10000&mimetype=application/octet-stream'
+            },
+            {
+                test : /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader : 'file'
+            },
+            {
+                test : /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader : 'url?limit=10000&mimetype=image/svg+xml'
+            },
+            {
+                test : /\.jsx?$/,
+                exclude : /node_modules/,
+                loader : 'babel-loader',
+                query : {
+                    presets : ['react', 'es2015']
+                }
             }
-        }]
+        ]
     },
-    plugins: [
+    plugins : [
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            tether: 'tether',
-            Tether: 'tether',
-            'window.Tether': 'tether',
+            $ : 'jquery',
+            jQuery : 'jquery',
+            'window.jQuery' : 'jquery',
+            tether : 'tether',
+            Tether : 'tether',
+            'window.Tether' : 'tether',
         }),
         // Always expose NODE_ENV to webpack so you can use `process.env.NODE_ENV`
         // inside your code for any environment checks; UglifyJS will automatically
@@ -107,24 +116,24 @@ var config = {
         ]),
         /* Separate common modules from vendor modules */
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'common',
-            minChunks: function(module, count) {
+            name : 'common',
+            minChunks : function(module, count) {
                 return !isExternal(module) && count >= 2; // adjustable cond
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            chunks: ['common'],
+            name : 'vendor',
+            chunks : ['common'],
             // or if you have an key value object for your entries
             // chunks: Object.keys(entry).concat('common')
-            minChunks: function(module) {
+            minChunks : function(module) {
                 return isExternal(module);
             }
         }),
         /************/
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest',
-            filename: 'manifest.js'
+            name : 'manifest',
+            filename : 'manifest.js'
         })
     ]
 };
@@ -136,11 +145,11 @@ if (process.env.NODE_ENV === 'production') {
     // will work without but this is useful to set.
     config.output.chunkFilename = '[chunkhash].js';
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: true,
+        compress : {
+            warnings : true,
         },
-        output: {
-            comments: false,
+        output : {
+            comments : false,
         },
     }));
     config.plugins.push(new ExtractTextPlugin('[name].css'));
