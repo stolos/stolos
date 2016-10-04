@@ -17,7 +17,9 @@ function check_port() {
 	done
 }
 
-check_port "db" "5432"
-check_port "cache" "6379"
+a=${DATABASE_URL##*//}
+check_port "${a%%:*}" "5432"
+a=${REDIS_URL##*//}
+check_port "${a%%:*}" "6379"
 
 exec "$@"
