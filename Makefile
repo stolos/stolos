@@ -2,22 +2,27 @@ init:
 	pip install -r requirements.txt
 
 dev:
-	./manage.py runserver 0.0.0.0:${PORT}
+	python manage.py runserver 0.0.0.0:${PORT}
 
 migrate:
-	./manage.py migrate
+	python manage.py migrate
 
 makemigrations:
-	./manage.py makemigrations
+	python manage.py makemigrations
 
 shell:
-	./manage.py shell
+	python manage.py shell
 
 watch:
-	./manage.py watch
+	python manage.py watch
 
 test:
-	./manage.py test
+	python manage.py test
 
 worker:
 	celery -A stolosd worker -l info
+
+loaddata:
+	python manage.py loaddata fixture.json
+
+bootstrap: migrate loaddata
