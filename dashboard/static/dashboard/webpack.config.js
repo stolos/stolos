@@ -32,7 +32,8 @@ var config = {
             'bootstrap',
             'react',
             'react-dom',
-            'react-router'
+            'react-router',
+            'bootstrap/dist/css/bootstrap.css'
         ]
     },
     output : {

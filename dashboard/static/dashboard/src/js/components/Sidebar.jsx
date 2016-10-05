@@ -6,9 +6,9 @@ export default class Sidebar extends Component{
         console.log('Sidebar.render()');
         return (
             <div className="col-sm-3" id="sidebar">
-                <ul role="nav">
-                    <li><Link to="/" activeClassName="active">Projects</Link></li>
-                </ul>
+                <nav>
+                    <div><Link to="/" activeClassName="active">Projects</Link></div>
+                </nav>
             </div>
         );
     }
