@@ -19,7 +19,7 @@ export default function Content({ projects }) {
                     var project = projects.filter(function(project) {
                         return (project.uuid === defaultProps.params.uuid);
                     });
-                    return <Project project = {project[0]} {...defaultProps} />;
+                    return <Project project = {project[0]} />;
                 }}
                 />
         </div>
