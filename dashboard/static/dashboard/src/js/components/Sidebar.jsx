@@ -7,7 +7,9 @@ export default class Sidebar extends Component{
         return (
             <div className="col-sm-3" id="sidebar">
                 <nav>
-                    <div><Link to="/" activeClassName="active">Projects</Link></div>
+                    <div className="nav-link-container">
+                        <Link to="/" activeClassName="active">Projects</Link>
+                    </div>
                 </nav>
             </div>
         );

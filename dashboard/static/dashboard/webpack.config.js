@@ -33,7 +33,7 @@ var config = {
             'react',
             'react-dom',
             'react-router',
-            'bootstrap/dist/css/bootstrap.css'
+            'bootstrap/scss/bootstrap.scss'
         ]
     },
     output : {
@@ -52,6 +52,10 @@ var config = {
             {
                 test : /\.css$/,
                 loader : ExtractTextPlugin.extract('style-loader', 'css-loader')
+            },
+            {
+                test : /\.scss$/,
+                loader : ExtractTextPlugin.extract('style', 'css!sass')
             },
             {
                 test : /\.png$/,

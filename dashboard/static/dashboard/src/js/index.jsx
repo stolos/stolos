@@ -9,15 +9,8 @@ const app = document.getElementById('root');
 
 window.$ = $;
 
-$.ajax({
-    url : "/api/a0.1/projects/",
-
-})
-.done(function( data ) {
-    console.log(data);
-    ReactDOM.render(
-        <Router basename="/projects">
-            <App projects = {data}/>
-        </Router>, app
-    );
-});
+ReactDOM.render(
+    <Router basename="/projects">
+        <App />
+    </Router>, app
+);
