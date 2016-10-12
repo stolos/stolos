@@ -68,9 +68,11 @@ def _get_container_tcp_ports(container):
     """Returns the container's tcp ports, if any, or an empty list
     """
     container_ports = container['NetworkSettings']['Ports']
+    if container_ports is None:
+        return []
     ports = []
     for port_key in container_ports:
-        if 'tcp' in port_key and ports[port_key] is not None:
+        if 'tcp' in port_key and container_ports[port_key] is not None:
             ports.append(container_ports[port_key][0]['HostPort'])
     return ports
 
