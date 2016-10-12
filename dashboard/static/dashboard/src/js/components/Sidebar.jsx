@@ -5,7 +5,7 @@ export default class Sidebar extends Component{
     render() {
         console.log('Sidebar.render()');
         return (
-            <div className="col-sm-3" id="sidebar">
+            <div className="col-sm-3 col-xl-2" id="sidebar">
                 <nav>
                     <div className="nav-link-container">
                         <Link to="/" activeClassName="active">Projects</Link>

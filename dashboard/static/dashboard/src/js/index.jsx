@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router } from 'react-router';
 import $ from 'jquery';
 
@@ -11,6 +11,6 @@ window.$ = $;
 
 ReactDOM.render(
     <Router basename="/projects">
-        <App />
+        <Dashboard />
     </Router>, app
 );
