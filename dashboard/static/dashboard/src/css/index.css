@@ -35,6 +35,10 @@
     padding: 1rem 0;
 }
 
+.tag a {
+    color: white;
+}
+
 
 /* Small devices (tablets, 544px and up) */
 

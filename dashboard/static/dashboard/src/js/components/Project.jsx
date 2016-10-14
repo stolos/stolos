@@ -15,7 +15,14 @@ export default function Project({ project : { owner, server, routing_config : { 
     for (var key in yamlConfig.services) {
         if (yamlConfig.services.hasOwnProperty(key)) {
             if (yamlConfig.services[key].ports) {
-                services.push(<span key={key} className="tag tag-primary">{key}</span>);
+                var serviceURL = domain.split('.');
+                serviceURL[0] = `${serviceURL[0]}-${key}`;
+                serviceURL = serviceURL.join('.');
+                services.push(
+                    <span key={key} className="tag tag-primary">
+                        <a href={ "https://" + serviceURL } target="_blank">{ key }</a>
+                    </span>
+                );
             }
         }
     }
