@@ -12,8 +12,9 @@ Before creating Users and Stacks for Stolos, the following things need to happen
 
 1. A Company account should be created in the form of a Group
 2. The Group should be given rights to:
-  - view and create Projects
+  - view, add and delete Projects
   - view Stacks
+  - view, add and delete public keys
 3. Every user created should be added to it's company's group
 
 ### Documentation
