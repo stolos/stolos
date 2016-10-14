@@ -410,10 +410,13 @@
   "fields": {
     "name": "sourcelair",
     "permissions": [
-      38,
-      41,
       37,
+      38,
+      39,
+      40,
+      41,
       42,
+      44,
       45
     ]
   }
