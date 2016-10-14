@@ -12,7 +12,7 @@ export default function({ projects, deleteProject }) {
         <div className="col-xs-12">
             <h2>Projects</h2>
             <div className="row">
-                <div className="projects-container col-lg-6 col-xs-12 m-t-1">
+                <div className="projects-container col-xs-12 m-t-1">
                     {projectsList}
                 </div>
             </div>
