@@ -19,7 +19,7 @@ export default function Project({ project : { owner, server, routing_config : { 
                 serviceURL[0] = `${serviceURL[0]}-${key}`;
                 serviceURL = serviceURL.join('.');
                 services.push(
-                    <span key={key} className="tag tag-primary">
+                    <span key={key} className="tag tag-primary m-r-1">
                         <a href={ "https://" + serviceURL } target="_blank">{ key }</a>
                     </span>
                 );
