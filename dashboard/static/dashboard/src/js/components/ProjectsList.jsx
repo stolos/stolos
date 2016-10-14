@@ -3,21 +3,19 @@ import NavLink from './NavLink';
 import Project from './Project';
 
 export default function({ projects, deleteProject }) {
-    console.log(deleteProject);
     var projectsList = projects.map(function(project, index) {
-        // console.log(project);
         return (
-        <li key = {index} >
-            <Project project = { project } deleteProject={deleteProject}/>
-        </li>
+            <Project key = {index} project = { project } deleteProject={deleteProject}/>
         );
     });
     return (
         <div className="col-xs-12">
             <h2>Projects</h2>
-            <ul>
-                {projectsList}
-            </ul>
+            <div className="row">
+                <div className="projects-container col-lg-6 col-xs-12 m-t-1">
+                    {projectsList}
+                </div>
+            </div>
         </div>
     );
 }

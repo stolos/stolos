@@ -6,9 +6,6 @@ import $ from 'jquery';
 
 const app = document.getElementById('root');
 
-
-window.$ = $;
-
 ReactDOM.render(
     <Router basename="/projects">
         <Dashboard />

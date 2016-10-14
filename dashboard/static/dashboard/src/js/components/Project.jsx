@@ -1,10 +1,8 @@
-// modules/About.js
 import React from 'react';
 // import { Link } from 'react-router';
 import yaml from 'js-yaml';
 
-export default function Project({ project : { owner, server, stack, stack : { docker_compose_file }, uuid }, deleteProject }) {
-    // console.log('project props: ', owner, server, stack, uuid, deleteProject );
+export default function Project({ project : { owner, server, routing_config : { domain } , stack, stack : { docker_compose_file }, uuid }, deleteProject }) {
 
     function handleClick() {
         deleteProject(uuid);
@@ -17,22 +15,20 @@ export default function Project({ project : { owner, server, stack, stack : { do
     for (var key in yamlConfig.services) {
         if (yamlConfig.services.hasOwnProperty(key)) {
             if (yamlConfig.services[key].ports) {
-                services.push(key);
+                services.push(<span key={key} className="tag tag-primary">{key}</span>);
             }
         }
     }
 
     return (
-        <div className="m-y-2">
-            <div>Project uuid: { uuid } </div>
-            <div>Project owner: { owner } </div>
-            <div>Stack: { stack.name } </div>
-            <div>Server host: { server.host } </div>
-            <div>Services: { services.join(', ') }</div>
-            <button onClick={handleClick} className="btn btn--danger">Delete project</button>
-            {/*<div>
-                <Link to="/" activeOnlyWhenExact activeClassName="active">Back to projects</Link>
-            </div>*/}
+
+        <div className="card card-block">
+            <div className="card-text">
+                <div><strong>UUID:</strong> { uuid } </div>
+                <div><strong>Public URL:</strong> <a href={ "https://" + domain } target="_blank">{ domain }</a></div>
+                <div><strong>Services:</strong> { services }</div>
+            </div>
+            <button onClick={handleClick} className="btn btn--danger m-t-1 pull-xs-right">Delete project</button>
         </div>
     );
 }

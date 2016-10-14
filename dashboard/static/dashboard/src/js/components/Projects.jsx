@@ -34,9 +34,9 @@ export default class Projects extends Component {
     }
 
     render() {
-        console.log('Projects state : ',this.state.projects);
-        console.log('Projects props : ',this.props);
-        console.log('Projects.render()');
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Projects state : ',this.state.projects);
+        }
         return (
             <ProjectsList { ...this.state } deleteProject={this.deleteProject.bind(this)}/>
         );

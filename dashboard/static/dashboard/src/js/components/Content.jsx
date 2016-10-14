@@ -4,7 +4,6 @@ import Projects from './Projects';
 import Project from './Project';
 
 export default function Content({ projects }) {
-    console.log('Content.render()');
     return (
         <main className="col-sm-9 col-xl-10">
             <div className="row" id="header">
