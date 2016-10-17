@@ -45,8 +45,6 @@ def post_deletion_cleanup(sender, instance, **kwargs):
     auth = requests.auth.HTTPBasicAuth(
         username=settings.AGENT_USERNAME, password=settings.AGENT_PASSWORD
     )
-    request = requests.post(cleanup_url, json={'uuid': str(instance.uuid)})
-    for _ in range(3):
-        if request.status_code == 200:
-            break
-        request = requests.post(host, json={'uuid': str(instance.uuid)})
+    session = requests.Session()
+    session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
+    request = session.post(cleanup_url, auth=auth, json={'uuid': str(instance.uuid)})
