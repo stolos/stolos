@@ -4,13 +4,7 @@ import $ from 'jquery';
 export default function Header() {
 
     function logout() {
-        $.ajax({
-            url : `/api/a0.1/auth/logout/`,
-            method : 'POST'
-        })
-        .done(function() {
-            document.location.reload();
-        });
+        window.location = '/logout/';
     }
 
     return (
