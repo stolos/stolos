@@ -1,11 +1,15 @@
 // modules/About.js
 import React, { Component } from 'react';
 import ProjectsList from './ProjectsList';
+import $ from 'jquery';
 
 export default class Projects extends Component {
     constructor(props) {
         super(props);
-        this.state = {projects : []};
+        this.state = {
+            projects : [],
+            fetched : false
+        };
     }
 
     componentDidMount() {
@@ -14,7 +18,8 @@ export default class Projects extends Component {
         })
         .done(function( data ) {
             this.setState({
-                projects : data
+                projects : data,
+                fetched : true
             });
         }.bind(this));
     }
@@ -36,10 +41,15 @@ export default class Projects extends Component {
     render() {
         if (process.env.NODE_ENV !== 'production') {
             console.log('Projects state : ',this.state.projects);
+            console.log('props: ', this.props);
         }
-        return (
-            <ProjectsList { ...this.state } deleteProject={this.deleteProject.bind(this)}/>
-        );
+        if (this.state.fetched) {
+            return (
+                <ProjectsList { ...this.state } deleteProject={this.deleteProject.bind(this)}/>
+            );
+        } else {
+            return null;
+        }
     }
 
 }

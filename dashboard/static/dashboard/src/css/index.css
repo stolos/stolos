@@ -1,4 +1,30 @@
 @import url('./buttons.css');
+
+#header {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #171d34;
+    color: white;
+    flex: 0 auto;
+}
+
+.btn#logout {
+    position: absolute;
+    right: 0.5rem;
+    top: -0.25rem;
+    border-radius: 100px;
+    color: white;
+    padding: 0;
+    height: 2rem;
+    width: 2rem;
+    background-color: transparent;
+    transition: background-color .2s ease-in;
+}
+
+.btn#logout:hover {
+    background-color: rgba(255,255,255,0.25);
+}
+
 #content {
     background-color: whitesmoke;
 }
@@ -25,18 +51,21 @@
     background: whitesmoke;
 }
 
-#header {
-    padding: 1rem 0;
-    background-color: #171d34;
-    color: white
-}
-
 #content {
-    padding: 1rem 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .tag a {
     color: white;
+}
+
+.no-projects {
+    font-size: 2rem;
+    color: #BDBDBD;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 5rem;
 }
 
 
@@ -70,6 +99,7 @@
     main {
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
 
     #content {

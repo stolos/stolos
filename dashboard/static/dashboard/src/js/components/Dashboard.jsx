@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Sidebar from './Sidebar';
 import Content from './Content';
-import {Miss} from 'react-router';
+import {Miss, Match} from 'react-router';
 import NotFound from './NotFound';
+import Header from './Header';
 
 export default class App extends Component {
     constructor(props) {
@@ -11,11 +12,12 @@ export default class App extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="row">
+                <main className="row">
                     <Miss component={NotFound}/>
-                    <Sidebar/>
+                    {/*<Sidebar />*/}
+                    <Header />
                     <Content />
-                </div>
+                </main>
             </div>
         );
     }

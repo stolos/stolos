@@ -4,10 +4,12 @@ import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router } from 'react-router';
 import $ from 'jquery';
 
+window.$ = $;
+
 const app = document.getElementById('root');
 
 ReactDOM.render(
-    <Router basename="/projects">
+    <Router basename="/">
         <Dashboard />
     </Router>, app
 );

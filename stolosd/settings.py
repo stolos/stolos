@@ -208,4 +208,5 @@ AGENT_PORT = os.getenv('AGENT_PORT', 5000)
 AGENT_USERNAME = os.getenv('AGENT_USERNAME', 'admin')
 AGENT_PASSWORD = os.getenv('AGENT_PASSWORD', 'secretpassword')
 
-LOGIN_URL = '/api/a0.1/auth/login/'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login'

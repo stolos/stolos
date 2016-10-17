@@ -2,10 +2,24 @@ import React from 'react';
 // import { Link } from 'react-router';
 import yaml from 'js-yaml';
 
-export default function Project({ project : { owner, server, routing_config : { domain } , stack, stack : { docker_compose_file }, uuid }, deleteProject }) {
+export default function Project({
+    project : {
+        routing_config : {
+            domain
+        },
+        stack : {
+            docker_compose_file,
+            slug
+        },
+        uuid
+    },
+    deleteProject
+}) {
 
     function handleClick() {
-        deleteProject(uuid);
+        if (window.confirm("Project deletion is irreversible. Continue?")) {
+            deleteProject(uuid);
+        }
     }
 
     var yamlConfig = yaml.safeLoad(docker_compose_file);
@@ -20,7 +34,7 @@ export default function Project({ project : { owner, server, routing_config : { 
                 serviceURL = serviceURL.join('.');
                 services.push(
                     <span key={key} className="tag tag-primary m-r-1">
-                        <a href={ "https://" + serviceURL } target="_blank">{ key }</a>
+                        <a href={ "http://" + serviceURL } target="_blank">{ key }</a>
                     </span>
                 );
             }
@@ -28,11 +42,11 @@ export default function Project({ project : { owner, server, routing_config : { 
     }
 
     return (
-
         <div className="card card-block">
             <div className="card-text">
                 <div><strong>UUID:</strong> { uuid } </div>
-                <div><strong>Public URL:</strong> <a href={ "https://" + domain } target="_blank">{ domain }</a></div>
+                <div><strong>Public URL:</strong> <a href={ "http://" + domain } target="_blank">{ domain }</a></div>
+                <div><strong>Stack:</strong> { slug }</div>
                 <div><strong>Services:</strong> { services }</div>
             </div>
             <button onClick={handleClick} className="btn btn--danger m-t-1 pull-xs-right">Delete project</button>

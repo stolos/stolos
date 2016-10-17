@@ -8,14 +8,25 @@ export default function({ projects, deleteProject }) {
             <Project key = {index} project = { project } deleteProject={deleteProject}/>
         );
     });
-    return (
-        <div className="col-xs-12">
-            <h2>Projects</h2>
-            <div className="row">
-                <div className="projects-container col-xs-12 m-t-1">
-                    {projectsList}
+    if (projectsList.length) {
+        return (
+            <div className="col-xs-12">
+                <h2>Projects</h2>
+                <div className="row">
+                    <div className="projects-container col-xs-12 m-t-1">
+                        {projectsList}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className="col-xs-12">
+                <h2>Projects</h2>
+                <div className="no-projects">
+                    You have not created any projects yet
+                </div>
+            </div>
+        );
+    }
 }

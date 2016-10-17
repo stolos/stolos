@@ -25,20 +25,23 @@ function isExternal(module) {
 var config = {
     devServer : {},
     entry : {
-        styles : 'index.css',
-        app : 'index.jsx',
+        app : [
+            'index.jsx',
+            'index.css'
+        ],
         vendor : [
             'jquery',
             'bootstrap',
             'react',
             'react-dom',
             'react-router',
-            'bootstrap/scss/bootstrap.scss'
+            'bootstrap/scss/bootstrap.scss',
+            'font-awesome/scss/font-awesome.scss'
         ]
     },
     output : {
         path : PATHS.build,
-        publicPath : '/'
+        publicPath : '/static/dashboard/public/'
     },
     resolve : {
         root : [
