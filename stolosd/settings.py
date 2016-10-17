@@ -31,6 +31,11 @@ SECRET_KEY = os.getenv('SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('PROD') is None
 
+# Security settings
+SECURE_HSTS_SECONDS = 31536000
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ALLOWED_HOSTS = []
 if os.getenv('ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
