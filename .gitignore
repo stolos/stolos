@@ -13,8 +13,8 @@ db.sqlite3
 node_modules
 
 # Build files
-build
-public
+build/**
+public/**
 
 #Logs
 npm-debug.log
