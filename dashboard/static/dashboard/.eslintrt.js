@@ -13,7 +13,8 @@ module.exports = {
         "no-undef" : "warn",
         "no-unused-vars" : "warn",
         "indent" : "error",
-        "key-spacing" : ["warn", { "beforeColon" : true }]
+        "key-spacing" : ["warn", { "beforeColon" : true }],
+        "no-console" : "warn"
     },
     "globals" : {
     },
