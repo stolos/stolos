@@ -18,3 +18,8 @@ public
 
 #Logs
 npm-debug.log
+
+# Global eslint dotfiles
+
+/.eslintrc.js
+/.eslintignore
