@@ -41,3 +41,6 @@ COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /usr/src/app
+RUN cd /usr/src/app/dashboard/static/dashboard/ &&\
+    npm install &&\
+    npm run prod
