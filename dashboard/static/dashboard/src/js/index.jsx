@@ -4,7 +4,9 @@ import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router } from 'react-router';
 import $ from 'jquery';
 
-window.$ = $;
+if (process.env.NODE_ENV !== 'production') {
+    window.$ = $;
+}
 
 const app = document.getElementById('root');
 
