@@ -1,4 +1,8 @@
-from django.db.models.signals import pre_save, post_save
+from os.path import join
+
+import requests
+from django.conf import settings
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from guardian.shortcuts import assign_perm
 
@@ -32,3 +36,15 @@ def add_permissions_to_owner(sender, instance, **kwargs):
         }
         permission = '%(app_label)s.%(perm)s_%(model_name)s' % perm_kwargs
         assign_perm(permission, instance.owner, instance)
+
+@receiver(post_delete, sender=models.Project, dispatch_uid='post_deletion_cleanup')
+def post_deletion_cleanup(sender, instance, **kwargs):
+    agent_host = instance.server.host
+    agent_url = 'http://' + agent_host + ':' + str(settings.AGENT_PORT)
+    cleanup_url = join(agent_url, 'api/v1.0/cleanup/')
+    auth = requests.auth.HTTPBasicAuth(
+        username=settings.AGENT_USERNAME, password=settings.AGENT_PASSWORD
+    )
+    session = requests.Session()
+    session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
+    request = session.post(cleanup_url, auth=auth, json={'uuid': str(instance.uuid)})

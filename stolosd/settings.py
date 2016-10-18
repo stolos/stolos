@@ -201,3 +201,8 @@ SERVER_EMAIL = os.getenv('SERVER_EMAIL', 'stolos@stolos.io')
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = os.getenv('MAILGUN_API_KEY')
 MAILGUN_SERVER_NAME = os.getenv('MAILGUN_SERVER_NAME')
+
+# Agent settings
+AGENT_PORT = os.getenv('AGENT_PORT', 5000)
+AGENT_USERNAME = os.getenv('AGENT_USERNAME', 'admin')
+AGENT_PASSWORD = os.getenv('AGENT_PASSWORD', 'secretpassword')
