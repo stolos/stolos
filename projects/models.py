@@ -16,7 +16,6 @@ class Server(models.Model):
     :param docker_ca_pem: ca.pem to use for connecting to Docker
     :param docker_cert_pem: cert.pem to use for connecting to Docker
     :param docker_key_pem: key.pem to use for connecting to Docker
-    :param unison_id_rsa: id_rsa to use for SSH'ing into the server for Unison
     :param host: the server IP or hostname to use when connecting
     :param created: the date this stack was created
     :param last_update: the date this stack was last updated
@@ -24,7 +23,6 @@ class Server(models.Model):
     :type docker_ca_pem: string
     :type docker_cert_pem: string
     :type docker_key_pem: string
-    :type unison_id_rsa: string
     :type host: string
     :type created: string
     :type last_update: string
@@ -34,7 +32,6 @@ class Server(models.Model):
     docker_ca_pem = models.TextField()
     docker_cert_pem = models.TextField()
     docker_key_pem = models.TextField()
-    unison_id_rsa = models.TextField()
     host = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
