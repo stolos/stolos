@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Sidebar from './Sidebar';
 import Content from './Content';
 import {Miss, Match} from 'react-router';
 import NotFound from './NotFound';
@@ -14,7 +13,6 @@ export default class App extends Component {
             <div className="container-fluid">
                 <main className="row">
                     <Miss component={NotFound}/>
-                    {/*<Sidebar />*/}
                     <Header />
                     <Content />
                 </main>
