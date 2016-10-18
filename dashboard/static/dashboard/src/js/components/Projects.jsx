@@ -1,4 +1,3 @@
-// modules/About.js
 import React, { Component } from 'react';
 import ProjectsList from './ProjectsList';
 import $ from 'jquery';
@@ -28,7 +27,7 @@ export default class Projects extends Component {
         $.ajax({
             url : `/api/a0.1/projects/${uuid}`,
             type : 'DELETE',
-            beforeSend: function(xhr) {
+            beforeSend : function(xhr) {
                 let name = 'csrftoken=',
                     ca = document.cookie.split(';'),
                     cookieVal = '';

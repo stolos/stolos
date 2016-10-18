@@ -1,5 +1,4 @@
 import React from 'react';
-import NavLink from './NavLink';
 import Project from './Project';
 
 export default function({ projects, deleteProject }) {

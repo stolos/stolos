@@ -1,7 +1,6 @@
 import React from 'react';
-import {Match, Miss, Redirect} from 'react-router';
+import { Match } from 'react-router';
 import Projects from './Projects';
-import Project from './Project';
 
 export default function Content() {
     return (
