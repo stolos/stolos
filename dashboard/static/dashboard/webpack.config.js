@@ -47,7 +47,7 @@ var config = {
             PATHS.js,
             PATHS.css
         ],
-        extensions : ['', '.js', '.jsx', '.json', '.coffee', '.css']
+        extensions : ['', '.js', '.jsx', '.json', '.css', '.scss']
     },
     module : {
         loaders : [
