@@ -28,6 +28,22 @@ export default class Projects extends Component {
         $.ajax({
             url : `/api/a0.1/projects/${uuid}`,
             type : 'DELETE',
+            beforeSend: function(xhr) {
+                let name = 'csrftoken=',
+                    ca = document.cookie.split(';'),
+                    cookieVal = '';
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        cookieVal = c.substring(name.length,c.length);
+                        break;
+                    }
+                }
+                xhr.setRequestHeader('X-CSRFToken', cookieVal);
+            },
         })
         .done(function() {
             this.setState({
