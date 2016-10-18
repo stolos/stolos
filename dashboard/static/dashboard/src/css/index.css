@@ -68,6 +68,12 @@
     margin-top: 5rem;
 }
 
+#login-container {
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -100%, 0);
+}
+
 
 /* Small devices (tablets, 544px and up) */
 

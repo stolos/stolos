@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div id="content" class="col-xs-12">
-                <div class="container">
+                <div class="card d-inline-block p-a-1" id="login-container">
                     {% if form.errors %}
                     <p>Your username and password didn't match. Please try again.</p>
                     {% endif %}
@@ -30,7 +30,7 @@
                     {{ form.password }}
                     </div>
 
-                    <button class="btn--primary">Sign in</button>
+                    <button class="btn btn--primary pull-xs-right">Sign in</button>
                     <input type="hidden" name="next" value="{{ next }}" />
 
                     </form>
