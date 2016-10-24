@@ -5,3 +5,16 @@
 db.sqlite3
 .coverage
 .vscode
+
+# System
+.DS_Store
+
+# Dependency directories
+node_modules/
+
+# Build files
+build/
+public/
+
+#Logs
+npm-debug.log

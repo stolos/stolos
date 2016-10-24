@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'helpers',
     'projects',
     'users',
+    'dashboard'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -181,7 +182,7 @@ ANONYMOUS_USER_NAME = None
 # Rest framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -206,3 +207,7 @@ MAILGUN_SERVER_NAME = os.getenv('MAILGUN_SERVER_NAME')
 AGENT_PORT = os.getenv('AGENT_PORT', 5000)
 AGENT_USERNAME = os.getenv('AGENT_USERNAME', 'admin')
 AGENT_PASSWORD = os.getenv('AGENT_PASSWORD', 'secretpassword')
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
