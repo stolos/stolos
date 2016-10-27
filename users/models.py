@@ -24,7 +24,13 @@ def _validate_public_key(value):
 
 class DockerCert(models.Model):
     """
-    Model for storing user's docker certs common names
+    Model for storing user's docker certs common names.
+
+    :param token: the key of the auth token, on which the certs are bound to
+    :param cert_cn: the common name used to identify a set of certificates
+
+    :type docker_ca_pem: string
+    :type docker_cert_pem: string
     """
     token = models.CharField(max_length=40, editable=False)
     cert_cn = models.CharField(max_length=32, editable=False)
