@@ -16,7 +16,7 @@ class CustomLoginView(LoginView):
         cfssl_url = 'test'  # TODO: update to cfssl server endpoint
         certs = requests.post(cfssl_url, random_cn) # TODO: fix request
         token = token_serializer_class(token).data['auth_token']
-        DockerCert.create(token=token, cert_cn=random_cn)
+        DockerCert.objects.create(token=token, cert_cn=random_cn)
 
         response_data = {
             'auth_token': token,
