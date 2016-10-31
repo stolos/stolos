@@ -20,9 +20,8 @@ class CustomLoginView(LoginView):
 
         response_data = {
             'auth_token': token,
-            'docker_key_pem': certs['docker_key_pem'],
-            'docker_cert_pem': certs['docker_cert_pem'],
-            'docker_ca_pem': certs['docker_ca_pem']
+            'docker_key_pem': certs['docker_key_pem']
+            'docker_cert_pem': certs['docker_cert_pem']
         }
         return Response(
             data=response_data,

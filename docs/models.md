@@ -6,6 +6,7 @@ Servers contain the needed information for connecting and syncing files with a S
 
 ### Fields
 
+* `docker_ca_pem`: `ca.pem` (certificate authority certificate) to use for connecting to Docker
 * `host`: the server IP or hostname to use when connecting
 * `created`: the date this stack was created
 * `last_update`: the date this stack was last updated
