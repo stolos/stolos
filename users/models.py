@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import authtoken
+from rest_framework.authtoken.models import Token
 from sshpubkeys import SSHKey
 from sshpubkeys.exceptions import MalformedDataException
 
@@ -32,7 +32,7 @@ class DockerCert(models.Model):
     :type docker_ca_pem: string
     :type docker_cert_pem: string
     """
-    token = models.CharField(max_length=40, editable=False)
+    token = models.ForeignKey(Token, on_delete=models.CASCADE)
     cert_cn = models.CharField(max_length=32, editable=False)
 
 
