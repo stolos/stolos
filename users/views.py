@@ -13,15 +13,26 @@ class CustomLoginView(LoginView):
         token_serializer_class = serializers.serializers_manager.get('token')
         alphabet = string.ascii_lowercase + string.digits
         random_cn = crypto.get_random_string(32, alphabet)
-        cfssl_url = 'test'  # TODO: update to cfssl server endpoint
-        certs = requests.post(cfssl_url, random_cn) # TODO: fix request
+        payload = {
+            "CN": random_cn,
+            "hosts": [""],
+            "names": {
+                "C": "GR",
+                "O": "SourceLair PC",
+                "ST": "Athens"
+            },
+            "profile": random_cn
+        }
+        response = requests.post(
+            'cfssl/api/v1/cfssl/newcert', payload
+        )
         token = token_serializer_class(token).data['auth_token']
         DockerCert.objects.create(token=token, cert_cn=random_cn)
 
         response_data = {
             'auth_token': token,
-            'docker_key_pem': certs['docker_key_pem']
-            'docker_cert_pem': certs['docker_cert_pem']
+            'docker_key_pem': response['result']['private_key'],
+            'docker_cert_pem': response['result']['certificate']
         }
         return Response(
             data=response_data,
