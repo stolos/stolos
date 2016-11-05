@@ -53,12 +53,14 @@ class Stack(models.Model):
     :param docker_compose_file: Docker compose file
     :param owner: the company owning this stack
     :param slug: the slug of the stack, automatically compiled from owner/name
+    :param description: a short stack description
     :param created: the date this stack was created
     :param last_update: the date this stack was last updated
 
     :type docker_compose_file: string
     :type owner: django.contrib.auth.models.Group
     :type slug: string
+    :type description: string
     :type created: datetime
     :type last_update: datetime
     """
@@ -69,6 +71,7 @@ class Stack(models.Model):
         on_delete=models.CASCADE,
     )
     slug = models.CharField(max_length=64, editable=False)
+    description = models.CharField(max_length=140, editable=False, default='')
     created = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
