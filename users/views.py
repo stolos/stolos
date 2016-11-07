@@ -37,7 +37,8 @@ class CustomLoginView(utils.ActionViewMixin, generics.GenericAPIView):
         response = requests.post(
             'http://cfssl:8888/api/v1/cfssl/newcert', json=payload
         )
-        DockerCert.objects.create(token=token, cert_cn=random_cn)
+        DockerCert.objects.create(
+            token=token, cert_cn=random_cn, owner=serializer.user)
 
         response_data = {
             'auth_token': token_serializer_class(token).data['auth_token'],

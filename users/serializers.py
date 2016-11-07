@@ -20,3 +20,9 @@ class SSHPublicKeySerializer(serializers.ModelSerializer):
         model = models.SSHPublicKey
         fields = ('uuid', 'name', 'public_key', 'md5', 'sha256', 'sha512',
                   'owner',)
+
+
+class DockerCertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DockerCert
+        fields = ('cert_cn', )

@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 import uuid
 
+import django.contrib.auth.models
+
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -32,8 +34,17 @@ class DockerCert(models.Model):
     :type docker_ca_pem: string
     :type docker_cert_pem: string
     """
+    owner = models.ForeignKey(
+        django.contrib.auth.models.User,
+        on_delete=models.CASCADE,
+    )
     token = models.ForeignKey(Token, on_delete=models.CASCADE)
     cert_cn = models.CharField(max_length=32, editable=False)
+
+    class Meta:
+        permissions = (
+            ('view_dockercert', 'Can view Docker Certificate'),
+        )
 
 
 class SSHPublicKey(models.Model):
