@@ -25,14 +25,22 @@ class CustomLoginView(utils.ActionViewMixin, generics.GenericAPIView):
         alphabet = string.ascii_lowercase + string.digits
         random_cn = crypto.get_random_string(32, alphabet)
         payload = {
-            "CN": str(random_cn),
-            "hosts": [""],
-            "names": {
-                "C": "GR",
-                "O": "SourceLair PC",
-                "ST": "Athens"
+            'request': {
+                'CN': random_cn,
+                'hosts': [''],
+                'key': {
+                    'algo': 'rsa',
+                    'size': 2048
+                },
+                'names': [
+                    {
+                        'C': 'GR',
+                        'O': 'SourceLair PC',
+                        'ST': 'Athens'
+                    }
+                ],
             },
-            "profile": 'client'
+            'profile': 'client',
         }
         response = requests.post(
             'http://cfssl:8888/api/v1/cfssl/newcert', json=payload
