@@ -12,3 +12,8 @@ class SSHPublicKeyAdmin(GuardedModelAdmin):
 @admin.register(models.DockerCert)
 class DockerCert(GuardedModelAdmin):
     pass
+
+
+@admin.register(models.APIToken)
+class APIToken(GuardedModelAdmin):
+    pass

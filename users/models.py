@@ -7,7 +7,7 @@ import django.contrib.auth.models
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils import crypto
 from rest_framework.authtoken.models import Token
 from sshpubkeys import SSHKey
 from sshpubkeys.exceptions import MalformedDataException
@@ -24,6 +24,27 @@ def _validate_public_key(value):
         raise ValidationError(exc.message, code='invalid-key')
 
 
+def _crypto_40_token():
+    return crypto.get_random_string(40)
+
+
+class APIToken(models.Model):
+    """
+    Authorization token, used to achieve multiple token authentication in
+    Django Rest Framework.
+    """
+    key = models.CharField(
+        max_length=40, primary_key=True, default=_crypto_40_token,
+        editable=False)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_agent = models.CharField(max_length=512, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.key
+
+
 class DockerCert(models.Model):
     """
     Model for storing user's docker certs common names.
@@ -38,7 +59,7 @@ class DockerCert(models.Model):
         django.contrib.auth.models.User,
         on_delete=models.CASCADE,
     )
-    token = models.ForeignKey(Token, on_delete=models.CASCADE)
+    token = models.ForeignKey(APIToken, on_delete=models.CASCADE)
     cert_cn = models.CharField(max_length=32, editable=False)
 
     class Meta:

@@ -1,6 +1,7 @@
 import string
 
 import requests
+from django.contrib.auth import user_logged_in
 from django.utils import crypto
 from djoser import utils
 from djoser import serializers
@@ -10,7 +11,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from users.exceptions import CFSSLError
-from users.models import DockerCert
+from users.models import DockerCert, APIToken
 
 
 class CustomLoginView(utils.ActionViewMixin, generics.GenericAPIView):
@@ -20,6 +21,12 @@ class CustomLoginView(utils.ActionViewMixin, generics.GenericAPIView):
     permission_classes = (
         permissions.AllowAny,
     )
+
+    def _login_user(self, request, user):
+        token = APIToken.objects.create(
+            user=user, user_agent=request.META.get('HTTP_USER_AGENT')[:255])
+        user_logged_in.send(sender=user.__class__, request=request, user=user)
+        return token
 
     def _create_docker_cert(self, token):
         random_cn = crypto.get_random_string(32)
@@ -54,7 +61,7 @@ class CustomLoginView(utils.ActionViewMixin, generics.GenericAPIView):
         return result['certificate'], result['private_key']
 
     def action(self, serializer):
-        token = utils.login_user(self.request, serializer.user)
+        token = self._login_user(self.request, serializer.user)
         token_serializer_class = serializers.serializers_manager.get('token')
         certificate, private_key = self._create_docker_cert(token)
         response_data = {
