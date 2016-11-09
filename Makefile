@@ -22,6 +22,9 @@ test:
 worker:
 	celery -A stolosd worker -l info
 
+dumpdata:
+	@ python manage.py dumpdata projects.server projects.stack auth.permission auth.user auth.group --indent=2
+
 loaddata:
 	python manage.py loaddata fixture.json
 
