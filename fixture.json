@@ -1,5 +1,15 @@
 [
 {
+  "model": "projects.server",
+  "pk": "df8018bc-360f-42ac-932f-2c70a7093668",
+  "fields": {
+    "docker_ca_pem": "-----BEGIN CERTIFICATE-----\r\nMIIDmzCCAoOgAwIBAgIUfbPZ0Y8W6csjEV0PxxgH0eUD8iAwDQYJKoZIhvcNAQEL\r\nBQAwVTELMAkGA1UEBhMCR1IxDzANBgNVBAgTBkF0aGVuczEWMBQGA1UEChMNU291\r\ncmNlTGFpciBQQzEdMBsGA1UEAxMUU291cmNlTGFpciBTdG9sb3MgQ0EwHhcNMTYx\r\nMTA3MTQ1MjAwWhcNMjExMTA2MTQ1MjAwWjBVMQswCQYDVQQGEwJHUjEPMA0GA1UE\r\nCBMGQXRoZW5zMRYwFAYDVQQKEw1Tb3VyY2VMYWlyIFBDMR0wGwYDVQQDExRTb3Vy\r\nY2VMYWlyIFN0b2xvcyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\r\nAOQTw60JvkAsD6cptECDRmVe+reim2/uJdsKNYVgpt1J6bOP5bz/P0dnLCw2v79c\r\nc3C1YWhXVtbYpFTRQ8pnvjsH65Q2uzPQHwHlEf1LwxxOxdNKXjf08QSpQTuBTNJu\r\nyIytALeZK/NUWM4cahfSBZPK83iXHcEYdAlYEM47+yujOP4SHa6BGrVW/Xp4U0UP\r\n14pxtlvWoQi2DsRjKYS9Db2wHRmVAHSOsblGW9eM9fF/Efniy/VbZnRzvKny8adQ\r\n8D6D+qGhMzVmiOCkMXbcrlsv6P37oh4Ax+7g5dcU9Hd+YuaMWDrXxjunqdp3s6YF\r\nZpAxgDrZ+Solvh+BE1rH7qsCAwEAAaNjMGEwDgYDVR0PAQH/BAQDAgEGMA8GA1Ud\r\nEwEB/wQFMAMBAf8wHQYDVR0OBBYEFJ1T55ghr6ou41ttog3Vm9jkAL6eMB8GA1Ud\r\nIwQYMBaAFJ1T55ghr6ou41ttog3Vm9jkAL6eMA0GCSqGSIb3DQEBCwUAA4IBAQDJ\r\nJEm0plpS7GdszyR32gKmM8orXXuzkr8a7lbwgK1To8dIPJV+sIC2xYSvRUoZ6NCr\r\ndsUoo+wR5KudBxklVWjXTP9oeSvYDRFuLFohcZrk6Q8jX7tXCxtf95ruKBcJsR6C\r\nESDm1d6i3Rb1P7YFBBeJov7aZC8Hw14zzl5KiUrsM3QOQQVLd/H7cnwy/zkvKkzC\r\neF14e9LxcMP5XCUxAfiAL2CyopXrwiVCrRn5cSNR+xjlw+1KFvCoY3r18ayaKtJG\r\n6TD7rvroGYioXsC3GI7BAae6TtomS4akHxXpywWNaUKqT+N1MdYN494SgfolE0cp\r\nHIh9z3uNjs8E6Fq60hz3\r\n-----END CERTIFICATE-----",
+    "host": "sourcelair.stolos.io",
+    "created": "2016-10-04T10:00:36.298Z",
+    "last_update": "2016-11-09T10:33:15.296Z"
+  }
+},
+{
   "model": "auth.permission",
   "pk": 1,
   "fields": {
@@ -405,19 +415,98 @@
   }
 },
 {
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can add ssh public key",
+    "content_type": 15,
+    "codename": "add_sshpublickey"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can change ssh public key",
+    "content_type": 15,
+    "codename": "change_sshpublickey"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can delete ssh public key",
+    "content_type": 15,
+    "codename": "delete_sshpublickey"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can view public key",
+    "content_type": 15,
+    "codename": "view_sshpublickey"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can add docker cert",
+    "content_type": 14,
+    "codename": "add_dockercert"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can change docker cert",
+    "content_type": 14,
+    "codename": "change_dockercert"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can delete docker cert",
+    "content_type": 14,
+    "codename": "delete_dockercert"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can view Docker Certificate",
+    "content_type": 14,
+    "codename": "view_dockercert"
+  }
+},
+{
   "model": "auth.group",
   "pk": 1,
   "fields": {
     "name": "sourcelair",
     "permissions": [
-      37,
       38,
       39,
       40,
       41,
+      34,
+      35,
+      36,
+      37,
       42,
       44,
-      45
+      45,
+      46,
+      47,
+      48,
+      49
     ]
   }
 },
@@ -426,7 +515,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$24000$mtb2wiVTDLuu$pYwRRPs4wZJLwGr4Y886ub+Qk+9g4s50o+yjmpq+0jk=",
-    "last_login": "2016-10-04T09:58:11.959Z",
+    "last_login": "2016-11-07T12:14:07.589Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -444,7 +533,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$24000$rZfkRmOuJJIZ$Tyv+BbuEXeyWs74arrlT/wYLcJBrRplJmrkj/uTOL5w=",
-    "last_login": null,
+    "last_login": "2016-11-09T10:16:35.430Z",
     "is_superuser": false,
     "username": "akalipetis",
     "first_name": "",
@@ -540,51 +629,42 @@
   }
 },
 {
-  "model": "projects.server",
-  "pk": "df8018bc-360f-42ac-932f-2c70a7093668",
+  "model": "projects.stack",
+  "pk": 1,
   "fields": {
-    "docker_ca_pem": "-----BEGIN CERTIFICATE-----\r\nMIIDjjCCAnigAwIBAgIIJYOo4aYNAvkwCwYJKoZIhvcNAQELMFUxCzAJBgNVBAYT\r\nAkdSMRYwFAYDVQQKEw1Tb3VyY2VMYWlyIFBDMQ8wDQYDVQQIEwZBdGhlbnMxHTAb\r\nBgNVBAMTFFNvdXJjZUxhaXIgU3RvbG9zIENBMB4XDTE2MDgwOTE2MTUwMFoXDTIx\r\nMDgwODE2MTUwMFowVTELMAkGA1UEBhMCR1IxFjAUBgNVBAoTDVNvdXJjZUxhaXIg\r\nUEMxDzANBgNVBAgTBkF0aGVuczEdMBsGA1UEAxMUU291cmNlTGFpciBTdG9sb3Mg\r\nQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDzfPw/aeRW1/J8azpN\r\n8V4heD+rHYiudEm5r9UjAl3TXsmXf34avz02Hq2idz0x2YHqtvKxrR+NKqoe1b0g\r\nNpAc573rCsfKHjXL3p3b0sqDwbIr8qsq8ZV5fbhFD9cwJ4sWwRCqC9q8EjtzuDL8\r\nqAXNp1nHFVzyOIXuD4vjZ5FS6N7uN3jgUmK6IXzJpSZf2nAf0DKWKPUCMzOi++71\r\nAhBXL7BNQZ3MYRSwZdtZwaOMcwCim828SFUG4osygY1WfkgQvPjtCqqtKUNNcAvw\r\nL4Ixpx3yZ+o4qCsdWjrsWGE8GgbiNL30wVBy2Fve3QphNlJnxX678oS/R1V49Jgf\r\n6mT/AgMBAAGjZjBkMA4GA1UdDwEB/wQEAwIABjASBgNVHRMBAf8ECDAGAQH/AgEC\r\nMB0GA1UdDgQWBBTHbSpu/q0eztXbVYMB0+OGHiedbDAfBgNVHSMEGDAWgBTHbSpu\r\n/q0eztXbVYMB0+OGHiedbDALBgkqhkiG9w0BAQsDggEBAATk7al4YzFkaDhGQao0\r\n8pUgDODBYYXYwmhWFMJpMJSwx5/qI9dDL7uqB4HVsQ0XLj4Tj89KNJokyv7XL+S9\r\nRXL4iH1eWWSGKb6Zje4XkKXNt2Xr4wmXyARimOIfCP+MTg/6qA80ff9Tri+vM6WG\r\noXu1e6Dq5/J/XVNpJfXNnbEkUKhDeOPJMQEufxGR9Jks8irA7VrCpV9ntI/t15oy\r\np/wtIF5Q/so1tiyHi1mIZFYvgIQR8oAAFvVlTpzZJI4ryMVrl34D6OeSbLPO5Slj\r\nmH/DGzWhdZkAwp9FrR976Vot21LrjyLoPAejv3+vvAfnf17+I884WTsaUAw2wpKq\r\nv7Y=\r\n-----END CERTIFICATE-----",
-    "docker_cert_pem": "-----BEGIN CERTIFICATE-----\r\nMIIDnjCCAoigAwIBAgIIVqgNy5e2yR4wCwYJKoZIhvcNAQELMFUxCzAJBgNVBAYT\r\nAkdSMRYwFAYDVQQKEw1Tb3VyY2VMYWlyIFBDMQ8wDQYDVQQIEwZBdGhlbnMxHTAb\r\nBgNVBAMTFFNvdXJjZUxhaXIgU3RvbG9zIENBMB4XDTE2MDgwOTE2MTUwMFoXDTIx\r\nMDgwODE2MTUwMFowRzELMAkGA1UEBhMCR1IxFjAUBgNVBAoTDVNvdXJjZUxhaXIg\r\nUEMxDzANBgNVBAgTBkF0aGVuczEPMA0GA1UEAxMGY2xpZW50MIIBIjANBgkqhkiG\r\n9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5jrclSOamG/baCVxkX3KBticEfxtk40UqFWW\r\nGtrik15Hf8UhMe9ImbhSUB/XH1ZPbUPFOYoXqG/S1WKk+Rad6tvOcxXrRNgSDcjR\r\nPYcdIT8WVXUU6yhniNrudNUKWNmJ38A7C/UnAPpNmiUgrOyToIijln6n4Be1NSvH\r\nqd2uE/FsefmFNjiCjT5otjmXAw5cJiP6gV2p+WGjWe5VGoTVwPFC6Cfron7VuIE0\r\nUVWP2D8DnhbuOARYOdSspXaghczQa2oiKR7DrJl7fVRsWQMfHji+4Py28Rghyeb4\r\nN7gs9WJMBq4SUGGvaHP1YSteTwb1Ca84w/B8x8OuSmzGDTKKgQIDAQABo4GDMIGA\r\nMA4GA1UdDwEB/wQEAwIAoDATBgNVHSUEDDAKBggrBgEFBQcDAjAMBgNVHRMBAf8E\r\nAjAAMB0GA1UdDgQWBBS7RfmTvflaGoeRBzdbjwP+UV25iDAfBgNVHSMEGDAWgBTH\r\nbSpu/q0eztXbVYMB0+OGHiedbDALBgNVHREEBDACggAwCwYJKoZIhvcNAQELA4IB\r\nAQBHMzYI4t2CnllqtZT7P/XoqQd+LrK4k+Ls5vq2IePiPCrz6sR6nX0oWwKBJqpM\r\nx15xFskLwcTrAWqSVBXK5d9In0RyAWnyZy9jMLHQVEKIA47WDoD2Rzgkhf6vSNas\r\nJMqN9eUGghdq85Nf033u0Uzm+Vj9fIcG6vVHZWzRgKA385dCEL/NYNNk0Or6iBD2\r\nfoxfAPArwMyXNmiinsTJEIoGZh6/B9KEq6mP6kZ3aT8epQfuknq5s9bp1k9fZpWA\r\nDfzHd0pv/WNGp8W1K5Gzt7SkxBR1UOB9DYfDro1oOKYUIuPg4ixEWRPsxIOdNBEI\r\n+ixcumPKrubCUp02l6MZtsiu\r\n-----END CERTIFICATE-----",
-    "docker_key_pem": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEpAIBAAKCAQEA5jrclSOamG/baCVxkX3KBticEfxtk40UqFWWGtrik15Hf8Uh\r\nMe9ImbhSUB/XH1ZPbUPFOYoXqG/S1WKk+Rad6tvOcxXrRNgSDcjRPYcdIT8WVXUU\r\n6yhniNrudNUKWNmJ38A7C/UnAPpNmiUgrOyToIijln6n4Be1NSvHqd2uE/FsefmF\r\nNjiCjT5otjmXAw5cJiP6gV2p+WGjWe5VGoTVwPFC6Cfron7VuIE0UVWP2D8Dnhbu\r\nOARYOdSspXaghczQa2oiKR7DrJl7fVRsWQMfHji+4Py28Rghyeb4N7gs9WJMBq4S\r\nUGGvaHP1YSteTwb1Ca84w/B8x8OuSmzGDTKKgQIDAQABAoIBAQCmsp/cbHcXQIaA\r\nlfvw+D87TcNTUo6Uc2YtrCqPL0U2puDmJnmuii7q/oa69RLx4bCI0LUQwGf40V66\r\nmj4RDMsyrgyBT7GVm00XJfw6rIXu+JrXLXsD+bFdageWGFrxkjE+DRWzxsGC97kQ\r\njylli7YoWkb4RKSQoRnXceeTmqrcTGYjz+HCynJ27aTm3CVPMQmGVG+EpPe12ei4\r\nC8yw5J1u7EN6JNH9WK8+xSyUABT/5HWgcZaScd8D8IT7irOIIQHPbaFEcLfWsbvV\r\nERw2z06I7Xj4VWHnocp8vcNnIWb85N/G7O5d+eEg/+4Yyg4wD2EAn0p81GZKLXhg\r\nAUDILpFBAoGBAOvKvAgPVBXPoawo7ubdhekBZr+syn1FBQ1MJRqhtL+z9u0WkGlQ\r\n+doFFsfBxhR7C7ceEd+5dSCJS+LCIJVFKi7aHIi3sypJTV71kP7I8tGVcNG42Z2q\r\nw+2iGs9NVAPIOFeBeg53gtnJ0m4QuXQMAw/TYRqnH/ViYUxFOt40P2flAoGBAPn2\r\nGNaKziBMRmssEc2VvBuTlWI6pO7MeqH/mvqoMd9vWb9qsr3udEb+0BxzWiy0yNaE\r\n25t5cVJfuIoeo4qqVGpzYAZSs6F2PF3AKurVVkzXrSLAQuUnfkBKihqEYTFoUIk6\r\nJSlFsg+3355FarwMWGrVaSPlMCc+m1xx3I2+lTZtAoGAUji2ysS1mIl3ofYAIKcc\r\nm/yuHKafUYFw2osz4Q6EXdjegRw+LUtcZMcjg3KxpNCnbCpjJzWff0IBIUh6XjLp\r\nG79Y9d/A7Tz0aumMrxvZeHX5CljAIbe7bLD7UlBvvIXkB7eRnVvVWCaFZ3YThUDv\r\nDGS0Vrvya/nrXdJCTdvARHUCgYEAnFCiR8iWDuykPPFaUM6KzFQG3179Nbj6F8TZ\r\nDleQmMHxxhrbnJs6bAt96czZX4vO7Rg4nYncrD7gEMAIVfcew1NTgaDGZPqj1Z0P\r\nObwgM/3McCb7roJ8GYiDxQF0Jomtk6OhCaZkLCA436lZji/KO0UqcyAodOJaFf2+\r\nh4XfmiECgYAWTuwSj6wxCeomeuE7Lku//S7gRdaqD4ZX2q/uN7FWeCBQv2Vgm9pn\r\noAecYco33SC6eshpQ92vzhYbkzwRVowNhLdljgFFybRB5tYHXU8uD36v0g29vxwy\r\nmktT56pykGIuxmSr9ePJKuq1CtLE/SQ2b1AImqpus4VbRvqn+/yBRg==\r\n-----END RSA PRIVATE KEY-----",
-    "host": "sourcelair.stolos.io",
-    "created": "2016-10-04T10:00:36.298Z",
-    "last_update": "2016-10-04T10:00:36.298Z"
+    "name": "demo",
+    "docker_compose_file": "version: '2'\r\n\r\nservices:\r\n  web:\r\n    build: ./voting-app/.\r\n    volumes:\r\n     - ${STOLOS_REMOTE_DIR}./voting-app:/app\r\n    ports:\r\n      - 80\r\n\r\n  results:\r\n    build: ./result-app/.\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./result-app:/app\r\n    ports:\r\n      - 80\r\n\r\n  worker:\r\n    image: manomarks/worker\r\n\r\n  redis:\r\n    image: redis:alpine\r\n\r\n  db:\r\n    image: postgres:9.4\r\n    volumes:\r\n      - \"db-data:/var/lib/postgresql/data\"\r\n\r\nvolumes:\r\n  db-data:",
+    "owner": 1,
+    "slug": "sourcelair/demo",
+    "description": "",
+    "created": "2016-10-04T10:00:59.328Z",
+    "last_update": "2016-10-04T10:00:59.328Z"
   }
 },
 {
-    "model": "projects.stack",
-    "pk": 1,
-    "fields": {
-        "name": "demo",
-        "docker_compose_file": "version: '2'\r\n\r\nservices:\r\n  web:\r\n    build: ./voting-app/.\r\n    volumes:\r\n     - ${STOLOS_REMOTE_DIR}./voting-app:/app\r\n    ports:\r\n      - 80\r\n\r\n  results:\r\n    build: ./result-app/.\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./result-app:/app\r\n    ports:\r\n      - 80\r\n\r\n  worker:\r\n    image: manomarks/worker\r\n\r\n  redis:\r\n    image: redis:alpine\r\n\r\n  db:\r\n    image: postgres:9.4\r\n    volumes:\r\n      - \"db-data:/var/lib/postgresql/data\"\r\n\r\nvolumes:\r\n  db-data:",
-        "owner": 1,
-        "slug": "sourcelair/demo",
-        "created": "2016-10-04T10:00:59.328Z",
-        "last_update": "2016-10-04T10:00:59.328Z"
-    }
+  "model": "projects.stack",
+  "pk": 2,
+  "fields": {
+    "name": "stolos",
+    "docker_compose_file": "version: '2'\r\nservices:\r\n  db:\r\n    image: postgres:9.5.3\r\n    environment:\r\n      - POSTGRES_PASSWORD=cGZx9qfn\r\n      - POSTGRES_DB=stolosd\r\n    volumes:\r\n      - postgres_data:/var/lib/postgresql/data\r\n    restart: always\r\n  \r\n  cache:\r\n    image: redis:3.2.1\r\n    volumes:\r\n      - redis_data:/data\r\n    restart: always\r\n  \r\n  web:\r\n    build: ./stolosd/\r\n    command: make dev\r\n    environment:\r\n      - PORT=8000\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - ALLOWED_HOSTS=$STOLOS_PUBLIC_URL\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n      - STOLOS_REPO_URL=git+git@github.com:sourcelair/stolosd stolosd\r\n    ports:\r\n      - 8000\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n  \r\n  worker:\r\n    build: ./stolosd/\r\n    command: make worker\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - STOLOS_WATCHD_CERYX_API_HOST=http://ceryx:5555\r\n      - DOCKER_IP=10.0.0.233\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n  \r\n  watcher:\r\n    build: ./stolosd/\r\n    command: make watch\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - STOLOS_WATCHD_CERYX_API_HOST=http://ceryx:5555\r\n      - DOCKER_IP=10.0.0.233\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n      - /var/run/docker.sock:/var/run/docker.sock\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n\r\n  bootstrapper:\r\n    build: ./stolosd/\r\n    command: make bootstrap\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: on-error\r\n    \r\n  wdb:\r\n    image: kozea/wdb-server\r\n    ports:\r\n      - 1984\r\n    restart: always\r\n\r\nnetworks:\r\n  stolosnet:\r\n    external: true\r\n\r\nvolumes:\r\n  postgres_data:\r\n  redis_data:",
+    "owner": 1,
+    "slug": "sourcelair/stolos",
+    "description": "",
+    "created": "2016-10-04T10:01:17.617Z",
+    "last_update": "2016-11-07T15:19:07.919Z"
+  }
 },
 {
-    "model": "projects.stack",
-    "pk": 2,
-    "fields": {
-        "name": "stolos",
-        "docker_compose_file": "version: '2'\r\nservices:\r\n  db:\r\n    image: postgres:9.5.3\r\n    environment:\r\n      - POSTGRES_PASSWORD=cGZx9qfn\r\n      - POSTGRES_DB=stolosd\r\n    volumes:\r\n      - postgres_data:/var/lib/postgresql/data\r\n    restart: always\r\n  \r\n  cache:\r\n    image: redis:3.2.1\r\n    volumes:\r\n      - redis_data:/data\r\n    restart: always\r\n  \r\n  web:\r\n    build: ./stolosd/\r\n    command: make dev\r\n    environment:\r\n      - PORT=8000\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    ports:\r\n      - 8000\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n  \r\n  worker:\r\n    build: ./stolosd/\r\n    command: make worker\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - STOLOS_WATCHD_CERYX_API_HOST=http://ceryx:5555\r\n      - DOCKER_IP=10.0.0.233\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n  \r\n  watcher:\r\n    build: ./stolosd/\r\n    command: make watch\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n      - STOLOS_WATCHD_CERYX_API_HOST=http://ceryx:5555\r\n      - DOCKER_IP=10.0.0.233\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n      - /var/run/docker.sock:/var/run/docker.sock\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: always\r\n\r\n  agent:\r\n    build: ./stolos-agent/\r\n    command: flask run --host=0.0.0.0\r\n    environment:\r\n      - FLASK_DEBUG=1\r\n      - FLASK_APP=app.py\r\n      - WDB_SOCKET_SERVER=wdb\r\n      - WDB_NO_BROWSER_AUTO_OPEN=True\r\n    ports:\r\n      - 5000\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolos-agent:/usr/src/app\r\n      - /mnt/stolos:/mnt/stolos\r\n      - /var/run/docker.sock:/var/run/docker.sock\r\n    restart: always\r\n\r\n  bootstrapper:\r\n    build: ./stolosd/\r\n    command: make bootstrap\r\n    environment:\r\n      - DATABASE_URL=postgres://postgres:cGZx9qfn@db:5432/stolosd\r\n      - REDIS_URL=redis://cache:6379/0\r\n    networks:\r\n      - stolosnet\r\n      - default\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}./stolosd:/usr/src/app\r\n    depends_on:\r\n      - db\r\n      - cache\r\n    restart: on-error\r\n    \r\n  wdb:\r\n    image: kozea/wdb-server\r\n    ports:\r\n      - 1984\r\n    restart: always\r\n\r\nnetworks:\r\n  stolosnet:\r\n    external: true\r\n\r\nvolumes:\r\n  postgres_data:\r\n  redis_data:",
-        "owner": 1,
-        "slug": "sourcelair/stolos",
-        "created": "2016-10-04T10:01:17.617Z",
-        "last_update": "2016-10-12T14:02:20.714Z"
-    }
-},
-{
-    "model": "projects.stack",
-    "pk": 3,
-    "fields": {
-        "name": "dummy",
-        "docker_compose_file": "version: '2'\r\nservices:\r\n  web:\r\n    image: nginx:1.10.1-alpine\r\n    ports:\r\n      - 80\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}:/usr/share/nginx/html",
-        "owner": 1,
-        "slug": "sourcelair/dummy",
-        "created": "2016-10-12T13:48:59.744Z",
-        "last_update": "2016-10-12T13:48:59.744Z"
-    }
+  "model": "projects.stack",
+  "pk": 3,
+  "fields": {
+    "name": "dummy",
+    "docker_compose_file": "version: '2'\r\nservices:\r\n  web:\r\n    image: nginx:1.10.1-alpine\r\n    ports:\r\n      - 80\r\n    volumes:\r\n      - ${STOLOS_REMOTE_DIR}:/usr/share/nginx/html",
+    "owner": 1,
+    "slug": "sourcelair/dummy",
+    "description": "",
+    "created": "2016-10-12T13:48:59.744Z",
+    "last_update": "2016-10-12T13:48:59.744Z"
+  }
 }
 ]

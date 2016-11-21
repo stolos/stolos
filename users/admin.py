@@ -7,3 +7,8 @@ from users import models
 @admin.register(models.SSHPublicKey)
 class SSHPublicKeyAdmin(GuardedModelAdmin):
     pass
+
+
+@admin.register(models.DockerCert)
+class DockerCert(GuardedModelAdmin):
+    pass

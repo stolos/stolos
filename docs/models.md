@@ -7,9 +7,6 @@ Servers contain the needed information for connecting and syncing files with a S
 ### Fields
 
 * `docker_ca_pem`: `ca.pem` (certificate authority certificate) to use for connecting to Docker
-* `docker_cert_pem`: `cert.pem` (client certificate) to use for connecting to Docker
-* `docker_key_pem`: `key.pem` (client private key) to use for connecting to Docker
-* `unison_id_rsa`: `id_rsa` (SSH private key) to use for SSH'ing into the server for Unison
 * `host`: the server IP or hostname to use when connecting
 * `created`: the date this stack was created
 * `last_update`: the date this stack was last updated

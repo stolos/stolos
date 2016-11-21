@@ -14,15 +14,11 @@ class Server(models.Model):
     a Stolos server.
 
     :param docker_ca_pem: ca.pem to use for connecting to Docker
-    :param docker_cert_pem: cert.pem to use for connecting to Docker
-    :param docker_key_pem: key.pem to use for connecting to Docker
     :param host: the server IP or hostname to use when connecting
     :param created: the date this stack was created
     :param last_update: the date this stack was last updated
 
     :type docker_ca_pem: string
-    :type docker_cert_pem: string
-    :type docker_key_pem: string
     :type host: string
     :type created: string
     :type last_update: string
@@ -30,8 +26,6 @@ class Server(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4,
                             editable=False)
     docker_ca_pem = models.TextField()
-    docker_cert_pem = models.TextField()
-    docker_key_pem = models.TextField()
     host = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)

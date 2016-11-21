@@ -2,10 +2,13 @@ from __future__ import unicode_literals
 
 import uuid
 
+import django.contrib.auth.models
+
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from rest_framework.authtoken.models import Token
 from sshpubkeys import SSHKey
 from sshpubkeys.exceptions import MalformedDataException
 
@@ -19,6 +22,29 @@ def _validate_public_key(value):
         ssh_key.parse()
     except MalformedDataException as exc:
         raise ValidationError(exc.message, code='invalid-key')
+
+
+class DockerCert(models.Model):
+    """
+    Model for storing user's docker certs common names.
+
+    :param token: the key of the auth token, on which the certs are bound to
+    :param cert_cn: the common name used to identify a set of certificates
+
+    :type docker_ca_pem: string
+    :type docker_cert_pem: string
+    """
+    owner = models.ForeignKey(
+        django.contrib.auth.models.User,
+        on_delete=models.CASCADE,
+    )
+    token = models.ForeignKey(Token, on_delete=models.CASCADE)
+    cert_cn = models.CharField(max_length=32, editable=False)
+
+    class Meta:
+        permissions = (
+            ('view_dockercert', 'Can view Docker Certificate'),
+        )
 
 
 class SSHPublicKey(models.Model):
