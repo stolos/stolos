@@ -80,7 +80,7 @@ class SSHPublicKey(models.Model):
     md5 = models.CharField(unique=True, max_length=256, editable=False)
     sha256 = models.CharField(unique=True, max_length=256, editable=False)
     sha512 = models.CharField(unique=True, max_length=256, editable=False)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=256)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
