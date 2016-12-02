@@ -37,7 +37,7 @@ SECURE_SSL_REDIRECT = not DEBUG
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ALLOWED_HOSTS = []
-if os.getenv('ALLOWED_HOSTS'):
+if not DEBUG and os.getenv('ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 ADMINS = email.utils.getaddresses(os.getenv('ADMINS', '').split(','))
@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,7 +104,9 @@ WSGI_APPLICATION = 'stolosd.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.path.join('sqlite:///', BASE_DIR, 'db.sqlite3'))
+        default='sqlite://%(base_dir)s/db.sqlite3' % {
+            'base_dir': os.path.abspath(BASE_DIR),
+        }),
 }
 
 
@@ -144,6 +147,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = '/mnt/static'
 
 # Caches settings
 

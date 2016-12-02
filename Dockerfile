@@ -24,7 +24,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.8.1
+ENV NODE_VERSION 6.9.1
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -40,7 +40,12 @@ ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /usr/src/app
-RUN cd /usr/src/app/dashboard/static/dashboard/ &&\
+COPY dashboard/static/dashboard /usr/src/app/dashboard/static/dashboard
+RUN cd /usr/src/app/dashboard/static/dashboard &&\
     npm install &&\
-    npm run prod
+    npm run prod &&\
+    rm -rf node_modules src
+
+COPY . /usr/src/app
+
+CMD ["make", "prod"]
