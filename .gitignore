@@ -18,3 +18,4 @@ public/
 
 #Logs
 npm-debug.log
+secrets.yml
