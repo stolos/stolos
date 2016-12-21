@@ -1,3 +1,4 @@
+import copy
 import os
 import uuid
 
@@ -260,6 +261,7 @@ class WatcherTestSuite(TestCase):
         container['NetworkSettings']['Ports'] = {}
         self.assertEqual(watcher._get_container_tcp_ports(container), [])
 
+    # Arguments are in reverse order
     @override_settings(DOCKER_IP='stolos-00.servers.lair.io')
     @mock.patch('stolos_watchd.watcher._should_route_container', return_value=True)
     @mock.patch('stolos_watchd.watcher._get_service', return_value='web')
@@ -274,14 +276,20 @@ class WatcherTestSuite(TestCase):
                         'project-4242.apps.lair.io',
                     ]
                 })
-    # Arguments are in reverse order
     @mock.patch('stolos_watchd.watcher.tasks.set_route.delay')
     @mock.patch('stolos_watchd.watcher.docker.Client.inspect_container')
     @mock.patch('stolos_watchd.watcher._get_routing_config')
     def test_process_event_start(self, mck_get_routing_config, mck_inspect,
                                  mck_task, *args):
         mck_get_routing_config.return_value = self.routing_config
-        mck_inspect.return_value = self.mck_inspect_return
+        mck_inspect.return_value = copy.deepcopy(self.mck_inspect_return)
+        mck_inspect.return_value['Config'] = {
+            'Env': [
+                'STOLOS_HOSTS=domain-1, domain-2',
+                'STOLOS_HOSTS_4242=domain-3',
+                'STOLOS_HOSTS_9090=non-existent-port'
+            ]
+        }
         watcher._process_event_start({})
         mck_task.assert_has_calls([
             mock.call('project-web.apps.lair.io',
@@ -291,6 +299,12 @@ class WatcherTestSuite(TestCase):
             mock.call('project.apps.lair.io',
                       'stolos-00.servers.lair.io:4242'),
             mock.call('project-4242.apps.lair.io',
+                      'stolos-00.servers.lair.io:4242'),
+            mock.call('domain-1',
+                      'stolos-00.servers.lair.io:4242'),
+            mock.call('domain-2',
+                      'stolos-00.servers.lair.io:4242'),
+            mock.call('domain-3',
                       'stolos-00.servers.lair.io:4242'),
         ])
 
