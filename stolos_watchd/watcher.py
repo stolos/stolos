@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+import re
 
 import docker
 
@@ -102,9 +103,25 @@ def _process_event_start(event):
     domains = project_routing_config.get_domains_for_service_per_port(
         service, ports
     )
+
     for port in ports:
         for domain in domains.get(str(port), []):
             tasks.set_route.delay(domain, _get_container_url(container, port))
+
+    for env_key in container['Config']['Env']:
+        # Match hosts
+        match = re.match(r'^stolos_hosts(_\d+)?=(.+)$', env_key, flags=re.IGNORECASE)
+        if match:
+            port = ports[0]
+            # If port was matched, pick that one instead
+            if match.group(1):
+                port = int(match.group(1)[1:])
+            custom_domains = match.group(2).split(',')
+            # Don't bother if port is not included in ports
+            if not port in ports:
+                continue
+            for domain in custom_domains:
+                tasks.set_route.delay(domain.strip(), _get_container_url(container, port))
 
 
 def _process_event_die(event):
