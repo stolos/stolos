@@ -103,7 +103,7 @@ class Project(models.Model):
     """
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4,
                             editable=False)
-    stack = models.ForeignKey('projects.Stack', on_delete=models.PROTECT)
+    stack = models.ForeignKey('projects.Stack', on_delete=models.SET_NULL, null=True, blank=True)
     server = models.ForeignKey('projects.Server',
                                on_delete=models.PROTECT,
                                editable=False,
