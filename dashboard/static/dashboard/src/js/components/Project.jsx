@@ -9,10 +9,7 @@ export default function Project({
                 subdomains
             }
         },
-        stack : {
-            docker_compose_file,
-            slug
-        },
+        stack,
         uuid
     },
     deleteProject
@@ -24,7 +21,14 @@ export default function Project({
         }
     }
 
-    var yamlConfig = yaml.safeLoad(docker_compose_file);
+    var yamlConfig = {services: []};
+    var slug = null;
+    if (stack && stack.docker_compose_file) {
+        yamlConfig = yaml.safeLoad(stack.docker_compose_file);
+    }
+    if (stack && stack.slug) {
+        slug = stack.slug;
+    }
 
     var services = [];
 
@@ -52,8 +56,8 @@ export default function Project({
             <div className="card-text">
                 <div><strong>UUID:</strong> { uuid } </div>
                 <div><strong>Public URL:</strong> <a href={ "http://" + domain } target="_blank">{ domain }</a></div>
-                <div><strong>Stack:</strong> { slug }</div>
-                <div><strong>Services:</strong> { services }</div>
+                {slug != null && <div><strong>Stack:</strong> { slug }</div>}
+                {services.length > 0 && <div><strong>Services:</strong> { services }</div>}
             </div>
             <button onClick={handleClick} className="btn btn--danger m-t-1 pull-xs-right">Delete project</button>
         </div>
