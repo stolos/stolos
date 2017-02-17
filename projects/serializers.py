@@ -25,6 +25,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=models.Stack.objects.all(),
         write_only=True,
+        allow_null=True,
     )
     stack = StackSerializer(many=False, read_only=True)
     owner = serializers.SlugRelatedField(
