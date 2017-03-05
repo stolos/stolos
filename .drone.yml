@@ -20,10 +20,10 @@ pipeline:
 
   publish:
     image: plugins/docker
-    registry: https://sourcelair-on.azurecr.io
+    registry: https://${SOURCELAIR_REGISTRY}
     username: sourcelair
     password: ${SOURCELAIR_REGISTRY_PASSWORD}
-    repo: stolosd
+    repo: ${SOURCELAIR_REGISTRY}/stolosd
     tag:
       - ${DRONE_COMMIT}
       - ${DRONE_BRANCH}
