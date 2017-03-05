@@ -15,11 +15,13 @@ pipeline:
       - cd dashboard/static/dashboard
       - npm install
       - npm run prod
+      # Remove assets, since they're not needed during publishing
+      - rm -rf node_modules src
 
   publish:
     image: plugins/docker
-    registry: https://registry.sourcelair.com
-    username: stolos
+    registry: https://sourcelair-on.azurecr.io
+    username: sourcelair
     password: ${SOURCELAIR_REGISTRY_PASSWORD}
     repo: stolosd
     tag:
