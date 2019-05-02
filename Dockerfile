@@ -1,5 +1,4 @@
 FROM python:2.7.11
-MAINTAINER Antonis Kalipetis <akalipetis@sourcelair.com>
 
 # Install system dependencies
 RUN apt-get update &&\
@@ -15,9 +14,6 @@ ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 # Install Python requirements
 COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Add static assets - the assets should have been built already
-COPY dashboard/static/dashboard /usr/src/app/dashboard/static/dashboard
 
 # Add the rest of the code
 COPY . /usr/src/app
